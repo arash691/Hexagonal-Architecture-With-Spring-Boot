@@ -1,11 +1,11 @@
 package com.blubank.doctorappointment.infrastructure.input.exception;
 
+import com.blubank.doctorappointment.domain.exception.RemoveDomainException;
 import com.blubank.doctorappointment.domain.exception.DomainNotFoundException;
 import com.blubank.doctorappointment.infrastructure.input.response.ResponseFactory;
 import com.blubank.doctorappointment.infrastructure.input.response.RestResponse;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -37,6 +37,13 @@ public class RestAPIExceptionHandler extends ResponseEntityExceptionHandler {
             JdbcSQLIntegrityConstraintViolationException ex) {
         return ResponseFactory.badRequest("unique constraint exception");
     }
+
+    @ExceptionHandler(value = {RemoveDomainException.class})
+    protected ResponseEntity<?> handleConflictRemoveDomain(
+            RemoveDomainException ex) {
+        return ResponseFactory.notAccepted(ex.getMessage());
+    }
+
 
     @Override
     protected ResponseEntity<Object> handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {

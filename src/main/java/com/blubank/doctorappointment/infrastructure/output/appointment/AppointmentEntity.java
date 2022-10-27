@@ -1,17 +1,22 @@
 package com.blubank.doctorappointment.infrastructure.output.appointment;
 
 import com.blubank.doctorappointment.domain.vo.Appointment;
+import com.blubank.doctorappointment.domain.vo.ID;
+import com.blubank.doctorappointment.domain.vo.OpenTime;
 import com.blubank.doctorappointment.infrastructure.output.doctor.DoctorEntity;
 import com.blubank.doctorappointment.infrastructure.output.patient.PatientEntity;
-import com.blubank.doctorappointment.infrastructure.output.opentime.OpenTimeEntity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.security.access.method.P;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.Objects;
 
 /**
  * @author a.ariani
@@ -30,14 +35,10 @@ public class AppointmentEntity implements Serializable {
     @MapsId("doctorId")
     @JoinColumn(name = "doctor_id", nullable = false)
     private DoctorEntity doctor;
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @MapsId("patientId")
-    @JoinColumn(name = "patient_id", nullable = false)
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "patient_id")
     private PatientEntity patient;
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @MapsId("openTimeId")
-    @JoinColumn(name = "open_time_id", nullable = false)
-    private OpenTimeEntity openTime;
 
     @CreatedDate
     @Column(name = "created_at", updatable = false)
@@ -59,11 +60,20 @@ public class AppointmentEntity implements Serializable {
         this.isActive = true;
     }
 
-    public AppointmentEntity(DoctorEntity doctor, PatientEntity patient, OpenTimeEntity openTime) {
-        this.id = new AppointmentPK(doctor.getId(), patient.getId(), openTime.getId());
+    public AppointmentEntity(DoctorEntity doctor, PatientEntity patient,LocalDate visitDate,
+                             LocalTime startTime,LocalTime endTime,Integer version) {
+        this.id = new AppointmentPK(doctor.getId(), visitDate, startTime, endTime);
         this.doctor = doctor;
         this.patient = patient;
-        this.openTime = openTime;
+        this.isActive = true;
+        this.version=version;
+    }
+
+    public static AppointmentEntity from(DoctorEntity doctorEntity,PatientEntity patientEntity,
+                                         OpenTime openTime,Integer version) {
+        return new AppointmentEntity(doctorEntity, patientEntity, openTime.getVisitDate().getVisitDate(),
+                openTime.getTimeDuration().getStart(),
+                openTime.getTimeDuration().getEnd(), version);
     }
 
     public AppointmentPK getId() {
@@ -90,13 +100,6 @@ public class AppointmentEntity implements Serializable {
         this.patient = patient;
     }
 
-    public OpenTimeEntity getOpenTime() {
-        return openTime;
-    }
-
-    public void setOpenTime(OpenTimeEntity openTime) {
-        this.openTime = openTime;
-    }
 
     public Instant getCreatedAt() {
         return createdAt;
@@ -126,12 +129,21 @@ public class AppointmentEntity implements Serializable {
         return version;
     }
 
-    public void setVersion(Integer version) {
-        this.version = version;
-    }
-
     public Appointment toDomain() {
-        return Appointment.of(doctor.toDomain(), patient.toDomain(), openTime.toDomain());
+        return Appointment.of(ID.of(doctor.getId()), patient != null ? ID.of(patient.getId()) : null,
+                OpenTime.of(id.getVisitDate(), id.getStartTime(), id.getEndTime()), version);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AppointmentEntity that = (AppointmentEntity) o;
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }

@@ -8,6 +8,7 @@ import com.blubank.doctorappointment.domain.vo.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,12 +21,8 @@ public class Doctor {
     private FullName fullName;
     private List<Appointment> appointments;
 
-    private Doctor(ID id, MedicalNo medicalNo, FullName fullName, List<Appointment> appointments) {
-        this.id = id;
-        this.medicalNo = medicalNo;
-        this.fullName = fullName;
-
-        this.appointments = appointments;
+    private Doctor(ID id){
+        this.id= id;
     }
 
     private Doctor(ID id, MedicalNo medicalNo, FullName fullName) {
@@ -38,19 +35,19 @@ public class Doctor {
         this.id = id;
         setMedicalNo(medicalNo);
         setFullName(fullName);
-        this
+        this.appointments = appointments;
     }
     public static Doctor of(Long id,Long medicalNo,String fullName) {
         return new Doctor(ID.of(id), MedicalNo.of(medicalNo), FullName.of(fullName));
     }
 
-    public static Doctor of(Long id ,Long medicalNo,String fullName,List<OpenTime> openTimes) {
-        return new Doctor(ID.of(id), MedicalNo.of(medicalNo), FullName.of(fullName), openTimes);
-    }
-    public static Doctor of(Long id ,Long medicalNo,String fullName,List<Appointment> appointments) {
+    public static Doctor of(Long id, Long medicalNo, String fullName, List<Appointment> appointments) {
         return new Doctor(ID.of(id), MedicalNo.of(medicalNo), FullName.of(fullName), appointments);
     }
 
+    public static Doctor of(Long doctorId) {
+        return new Doctor(ID.of(doctorId));
+    }
 
     public ID getId() {
         return id;
@@ -77,8 +74,6 @@ public class Doctor {
         this.fullName = fullName;
     }
 
-
-
     public void addOpenTimes(OpenTime openTime) {
         new IsValidStartAndEndTime().check(openTime);
         if (new IsNotLessThan30MinDuration().test(openTime)) {
@@ -88,8 +83,8 @@ public class Doctor {
             while (start.isBefore(end)) {
                 LocalTime plus = LocalTime.of(start.getHour(),
                         start.getMinute()).plus(30, ChronoUnit.MINUTES);
-                openTimes.add(OpenTime.of(visitDate, start,
-                        plus));
+                appointments.add(Appointment.of(this, null, OpenTime.of(visitDate, start,
+                        plus), 0));
                 start = plus;
             }
         }

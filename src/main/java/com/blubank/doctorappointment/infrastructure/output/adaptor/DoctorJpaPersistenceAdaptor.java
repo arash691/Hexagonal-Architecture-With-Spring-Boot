@@ -2,15 +2,16 @@ package com.blubank.doctorappointment.infrastructure.output.adaptor;
 
 import com.blubank.doctorappointment.application.ports.output.DoctorPersistencePort;
 import com.blubank.doctorappointment.domain.entity.Doctor;
+import com.blubank.doctorappointment.domain.exception.RemoveDomainException;
 import com.blubank.doctorappointment.domain.vo.OpenTime;
 import com.blubank.doctorappointment.domain.exception.DomainNotFoundException;
 import com.blubank.doctorappointment.domain.vo.Appointment;
 import com.blubank.doctorappointment.domain.vo.VisitDate;
-import com.blubank.doctorappointment.infrastructure.output.OpenTimeRepository;
+import com.blubank.doctorappointment.infrastructure.output.AppointmentRepository;
+import com.blubank.doctorappointment.infrastructure.output.appointment.AppointmentPK;
 import com.blubank.doctorappointment.infrastructure.output.doctor.DoctorEntity;
 import com.blubank.doctorappointment.domain.vo.ID;
 import com.blubank.doctorappointment.infrastructure.output.DoctorRepository;
-import com.blubank.doctorappointment.infrastructure.output.opentime.OpenTimeEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,12 +28,12 @@ import java.util.stream.Collectors;
 @Service
 public class DoctorJpaPersistenceAdaptor implements DoctorPersistencePort {
     private final DoctorRepository doctorRepository;
-    private final OpenTimeRepository openTimeRepository;
+    private final AppointmentRepository appointmentRepository;
 
     @Autowired
-    public DoctorJpaPersistenceAdaptor(DoctorRepository doctorRepository, OpenTimeRepository openTimeRepository) {
+    public DoctorJpaPersistenceAdaptor(DoctorRepository doctorRepository, AppointmentRepository appointmentRepository) {
         this.doctorRepository = doctorRepository;
-        this.openTimeRepository = openTimeRepository;
+        this.appointmentRepository = appointmentRepository;
     }
 
     @Transactional
@@ -63,40 +64,38 @@ public class DoctorJpaPersistenceAdaptor implements DoctorPersistencePort {
     }
 
     @Override
-    public List<OpenTime> findAllOpenTimes(ID id) {
-        return this.doctorRepository.findDoctorOpenTimesById(id.getId()).stream()
-                .map(DoctorRepository.DoctorOpenTime::toDomain)
+    public List<Appointment> findAllAppointments(ID id) {
+        return this.doctorRepository.findDoctorAppointmentById(id.getId()).stream()
+                .map(DoctorRepository.DoctorAppointment::toDomain)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<Appointment> findAllTakenTimes(ID id) {
-        return this.doctorRepository.findDoctorTakenTimesById(id.getId()).stream()
-                .map(DoctorRepository.DoctorTakenTime::toDomain)
-                .collect(Collectors.toList());
+        return List.of();
     }
 
     @Override
-    public List<OpenTime> findAllByVisitDate(VisitDate visitDate) {
-        return this.openTimeRepository.findAllByVisitDate(visitDate.getVisitDate())
-                .stream()
-                .map(OpenTimeEntity::toDomain)
-                .collect(Collectors.toList());
+    public List<OpenTime> findAllAppointmentsByVisitDate(VisitDate visitDate) {
+        return List.of();
     }
 
     @Transactional
     @Override
-    public void removeOpenTimes(ID id, List<OpenTime> openTimes) {
-        this.doctorRepository.findDetailById(id.getId()).ifPresent(doctorEntity -> {
-            if (!doctorEntity.getOpenTimes().isEmpty()) {
-                doctorEntity.getOpenTimes().removeAll(openTimes.stream()
-                        .map(openTime -> OpenTimeEntity.from(doctorEntity, openTime))
-                        .collect(Collectors.toList()));
-                this.doctorRepository.save(doctorEntity);
-            } else {
-                throw new DomainNotFoundException("openTimes not found");
-            }
-        });
+    public void removeOpenTimes(ID id, OpenTime openTime) {
+        this.appointmentRepository.findById(new AppointmentPK(id.getId(), openTime.getVisitDate().getVisitDate()
+                , openTime.getTimeDuration().getStart()
+                , openTime.getTimeDuration().getEnd()))
+                .ifPresentOrElse(appointmentEntity -> {
+                            if (appointmentEntity.getPatient() == null) {
+                                this.appointmentRepository.deleteOpenTime(appointmentEntity.getId(),appointmentEntity.getVersion());
+                            } else {
+                                throw new RemoveDomainException("taken time could not removed");
+                            }
+                        },
+                        () -> {
+                            throw new DomainNotFoundException("openTimes not found");
+                        });
     }
 
 

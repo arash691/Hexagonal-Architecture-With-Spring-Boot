@@ -12,15 +12,19 @@ public class Appointment {
     private final Doctor doctor;
     private final Patient patient;
     private final OpenTime openTime;
+    private final Integer version;
 
-    private Appointment(Doctor doctor, Patient patient, OpenTime openTime) {
+    private Appointment(Doctor doctor, Patient patient, OpenTime openTime, Integer version) {
         this.doctor = doctor;
         this.patient = patient;
         this.openTime = openTime;
+        this.version = version;
     }
-
-    public static Appointment of(Doctor doctor,Patient patient,OpenTime openTime) {
-        return new Appointment(doctor, patient, openTime);
+    public static Appointment of(Doctor doctor,Patient patient,OpenTime openTime,Integer version) {
+        return new Appointment(doctor, patient, openTime, version);
+    }
+    public static Appointment of(ID doctorId,ID patientId,OpenTime openTime,Integer version) {
+        return new Appointment(Doctor.of(doctorId.getId()), Patient.of(patientId), openTime, version);
     }
 
     public Doctor getDoctor() {
@@ -33,6 +37,10 @@ public class Appointment {
 
     public OpenTime getOpenTime() {
         return openTime;
+    }
+
+    public Integer getVersion() {
+        return version;
     }
 
     @Override

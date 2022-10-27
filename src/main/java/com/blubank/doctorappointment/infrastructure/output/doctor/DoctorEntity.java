@@ -1,10 +1,10 @@
 package com.blubank.doctorappointment.infrastructure.output.doctor;
 
 import com.blubank.doctorappointment.domain.entity.Doctor;
+import com.blubank.doctorappointment.domain.vo.Appointment;
 import com.blubank.doctorappointment.domain.vo.OpenTime;
 import com.blubank.doctorappointment.infrastructure.output.BaseEntity;
 import com.blubank.doctorappointment.infrastructure.output.appointment.AppointmentEntity;
-import com.blubank.doctorappointment.infrastructure.output.opentime.OpenTimeEntity;
 import javax.persistence.*;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -19,26 +19,22 @@ public class DoctorEntity extends BaseEntity {
     private Long medicalNo;
     @Column(name = "full_name")
     private String fullName;
-    @OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
-    private Set<OpenTimeEntity> openTimes = new HashSet<>();
+/*    @OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+    private Set<OpenTimeEntity> openTimes = new HashSet<>();*/
     @OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private Set<AppointmentEntity> appointments = new HashSet<>();
 
     public static DoctorEntity from(Doctor doctor) {
         DoctorEntity doctorEntity = new DoctorEntity();
+        doctorEntity.setId(doctor.getId() != null ? doctor.getId().getId() : null);
         doctorEntity.setFullName(doctor.getFullName().getFullName());
         doctorEntity.setMedicalNo(doctor.getMedicalNo().getMedicalNo());
-        Set<OpenTimeEntity> openTimeEntities = new HashSet<>();
-        if (doctor.getOpenTimes() != null && !doctor.getOpenTimes().isEmpty()) {
-            for (OpenTime openTime : doctor.getOpenTimes()) {
-                OpenTimeEntity openTimeEntity = new OpenTimeEntity();
-                openTimeEntity.setVisitDate(openTime.getVisitDate().getVisitDate());
-                openTimeEntity.setDoctor(doctorEntity);
-                openTimeEntity.setStartTime(openTime.getTimeDuration().getStart());
-                openTimeEntity.setEndTime(openTime.getTimeDuration().getEnd());
-                openTimeEntities.add(openTimeEntity);
+        Set<AppointmentEntity> appointmentEntities = new HashSet<>();
+        if (doctor.getAppointments() != null && !doctor.getAppointments().isEmpty()) {
+            for (Appointment appointment : doctor.getAppointments()) {
+                appointmentEntities.add(AppointmentEntity.from(doctorEntity, null, appointment.getOpenTime(),appointment.getVersion()));
             }
-            doctorEntity.setOpenTimes(openTimeEntities);
+            doctorEntity.setAppointments(appointmentEntities);
         }
         doctorEntity.setId(doctor.getId().getId());
         return doctorEntity;
@@ -46,7 +42,6 @@ public class DoctorEntity extends BaseEntity {
 
     public Doctor toDomain() {
         return Doctor.of(this.getId(), this.getMedicalNo(), this.getFullName(),
-                openTimes.stream().map(OpenTimeEntity::toDomain).collect(Collectors.toList()),
                 appointments.stream().map(AppointmentEntity::toDomain).collect(Collectors.toList())
         );
     }
@@ -66,14 +61,14 @@ public class DoctorEntity extends BaseEntity {
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
-
+/*
     public Set<OpenTimeEntity> getOpenTimes() {
         return openTimes;
     }
 
     public void setOpenTimes(Set<OpenTimeEntity> openTimes) {
         this.openTimes = openTimes;
-    }
+    }*/
 
     public Set<AppointmentEntity> getAppointments() {
         return appointments;
@@ -83,19 +78,19 @@ public class DoctorEntity extends BaseEntity {
         this.appointments = appointments;
     }
 
-    public void removeTimeTable(OpenTimeEntity timeTable) {
+  /*  public void removeTimeTable(OpenTimeEntity timeTable) {
         this.openTimes.remove(timeTable);
         timeTable.setDoctor(null);
     }
-
-    public void removeAllTimeTables(Set<OpenTimeEntity> timeTables) {
+*/
+ /*   public void removeAllTimeTables(Set<OpenTimeEntity> timeTables) {
         Iterator<OpenTimeEntity> iterator = timeTables.iterator();
         while (iterator.hasNext()) {
             OpenTimeEntity openTimeEntity = iterator.next();
             iterator.remove();
             openTimeEntity.setDoctor(null);
         }
-    }
+    }*/
 
     public void removeAppointment(AppointmentEntity appointment) {
         this.appointments.remove(appointment);

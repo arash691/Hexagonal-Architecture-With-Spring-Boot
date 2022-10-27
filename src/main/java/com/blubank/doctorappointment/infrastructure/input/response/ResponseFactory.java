@@ -64,4 +64,12 @@ public class ResponseFactory<T> {
         response.setHasError(true);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
+
+    public static <T> ResponseEntity<RestResponse<T>> notAccepted(String message) {
+        RestResponse<T> response = new RestResponse<>();
+        response.setCode(HttpStatus.NOT_ACCEPTABLE.value());
+        response.setMessage(message);
+        response.setHasError(true);
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(response);
+    }
 }

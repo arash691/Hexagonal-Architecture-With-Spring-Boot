@@ -32,12 +32,22 @@ public class Patient {
         this.appointments = appointments;
     }
 
+    public Patient(ID patientId) {
+        this.id = patientId;
+    }
+    public static Patient of(String fullName, String phoneNumber) {
+        return new Patient(null, FullName.of(fullName), PhoneNumber.of(phoneNumber));
+    }
     public static Patient of(Long id, String fullName, String phoneNumber){
         return new Patient(ID.of(id),FullName.of(fullName),PhoneNumber.of(phoneNumber));
     }
 
     public static Patient of(Long id, String fullName, String phoneNumber,List<Appointment> appointments) {
         return new Patient(ID.of(id), FullName.of(fullName), PhoneNumber.of(phoneNumber), appointments);
+    }
+
+    public static Patient of(ID patientId) {
+        return new Patient(patientId);
     }
 
     public ID getId() {
@@ -70,8 +80,8 @@ public class Patient {
         return appointments;
     }
 
-    public void addAppointment(List<Appointment> appointments) {
-        this.appointments = appointments;
+    public void addAppointment(Appointment appointment) {
+        this.appointments.add(appointment);
     }
 
     @Override

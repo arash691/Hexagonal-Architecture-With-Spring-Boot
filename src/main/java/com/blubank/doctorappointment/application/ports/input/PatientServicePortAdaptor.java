@@ -1,6 +1,8 @@
 package com.blubank.doctorappointment.application.ports.input;
 
 import com.blubank.doctorappointment.application.ports.output.PatientPersistencePort;
+import com.blubank.doctorappointment.domain.entity.Doctor;
+import com.blubank.doctorappointment.domain.entity.Patient;
 import com.blubank.doctorappointment.domain.vo.OpenTime;
 import com.blubank.doctorappointment.domain.vo.*;
 
@@ -23,8 +25,8 @@ public class PatientServicePortAdaptor implements PatientServicePort {
     }
 
     @Override
-    public Appointment createAppointment(ID doctorId, PhoneNumber phoneNumber, FullName fullName, OpenTime openTime) {
-        return null;
+    public Patient createAppointment(Doctor doctor, Patient patient, OpenTime openTime) {
+        return patientPersistencePort.createAppointment(doctor, patient, openTime);
     }
 
     @Override

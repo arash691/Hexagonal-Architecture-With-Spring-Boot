@@ -16,11 +16,11 @@ public interface DoctorPersistencePort {
 
     Doctor findRootById(ID id);
 
-    List<OpenTime> findAllOpenTimes(ID id);
+    List<Appointment> findAllAppointments(ID id);
 
     List<Appointment> findAllTakenTimes(ID id);
 
-    List<OpenTime> findAllByVisitDate(VisitDate visitDate);
+    List<OpenTime> findAllAppointmentsByVisitDate(VisitDate visitDate);
 
-    void removeOpenTimes(ID id, List<OpenTime> openTimes);
+    void removeOpenTimes(ID id, OpenTime openTime);
 }

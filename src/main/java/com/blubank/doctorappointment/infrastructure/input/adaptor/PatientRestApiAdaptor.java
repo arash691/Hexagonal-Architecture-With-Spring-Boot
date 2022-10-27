@@ -1,16 +1,20 @@
 package com.blubank.doctorappointment.infrastructure.input.adaptor;
 
 import com.blubank.doctorappointment.application.ports.input.PatientServicePort;
+import com.blubank.doctorappointment.domain.entity.Doctor;
+import com.blubank.doctorappointment.domain.entity.Patient;
+import com.blubank.doctorappointment.domain.exception.EmptyFullNameException;
+import com.blubank.doctorappointment.domain.exception.EmptyPhoneNumberException;
+import com.blubank.doctorappointment.domain.vo.ID;
+import com.blubank.doctorappointment.domain.vo.OpenTime;
 import com.blubank.doctorappointment.domain.vo.VisitDate;
+import com.blubank.doctorappointment.infrastructure.input.request.PatientTakeAppointmentRequest;
 import com.blubank.doctorappointment.infrastructure.input.response.ResponseFactory;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.Table;
 import java.time.LocalDate;
@@ -33,5 +37,19 @@ public class PatientRestApiAdaptor {
     @GetMapping(path = "/open-times")
     public ResponseEntity<?> findAllOpenTimes(@RequestParam(name = "visitDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate visitDate) {
         return ResponseFactory.ok(patientServicePort.findAllOpenTimesByVisitDate(VisitDate.of(visitDate)));
+    }
+
+    @PostMapping(path = "/appointments")
+    public ResponseEntity<?> takeAppointment(@RequestBody PatientTakeAppointmentRequest patientTakeAppointmentRequest) {
+         try {
+             return ResponseFactory.ok(patientServicePort.createAppointment(Doctor.of(patientTakeAppointmentRequest.getDoctorId()),
+                     Patient.of(patientTakeAppointmentRequest.getName(), patientTakeAppointmentRequest.getPhoneNumber()),
+                     OpenTime.of(patientTakeAppointmentRequest.getVisitDateInfo().getVisitDate(),
+                             patientTakeAppointmentRequest.getVisitDateInfo().getStartTime(),
+                             patientTakeAppointmentRequest.getVisitDateInfo().getEndTime())));
+         }
+         catch (EmptyFullNameException | EmptyPhoneNumberException e) {
+             return ResponseFactory.badRequest(e.getMessage());
+         }
     }
 }

@@ -6,7 +6,7 @@ import com.blubank.doctorappointment.application.ports.input.PatientServicePort;
 import com.blubank.doctorappointment.application.ports.input.PatientServicePortAdaptor;
 import com.blubank.doctorappointment.application.ports.output.DoctorPersistencePort;
 import com.blubank.doctorappointment.application.ports.output.PatientPersistencePort;
-import com.blubank.doctorappointment.infrastructure.output.OpenTimeRepository;
+import com.blubank.doctorappointment.infrastructure.output.AppointmentRepository;
 import com.blubank.doctorappointment.infrastructure.output.adaptor.DoctorJpaPersistenceAdaptor;
 import com.blubank.doctorappointment.infrastructure.output.adaptor.PatientJpaPersistenceAdaptor;
 import com.blubank.doctorappointment.infrastructure.output.DoctorRepository;
@@ -38,13 +38,13 @@ public class ApplicationConfig {
     }
 
     @Bean
-    public DoctorPersistencePort doctorPersistencePort(DoctorRepository doctorRepository, OpenTimeRepository openTimeRepository) {
-        return new DoctorJpaPersistenceAdaptor(doctorRepository, openTimeRepository);
+    public DoctorPersistencePort doctorPersistencePort(DoctorRepository doctorRepository, AppointmentRepository appointmentRepository) {
+        return new DoctorJpaPersistenceAdaptor(doctorRepository, appointmentRepository);
     }
 
     @Bean
-    public PatientPersistencePort patientPersistencePort(PatientRepository patientRepository,OpenTimeRepository openTimeRepository) {
-        return new PatientJpaPersistenceAdaptor(patientRepository, openTimeRepository);
+    public PatientPersistencePort patientPersistencePort(PatientRepository patientRepository,AppointmentRepository appointmentRepository) {
+        return new PatientJpaPersistenceAdaptor(patientRepository, appointmentRepository);
     }
 
     @Bean

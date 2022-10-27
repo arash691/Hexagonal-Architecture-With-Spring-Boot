@@ -1,8 +1,11 @@
 package com.blubank.doctorappointment.infrastructure.output.patient;
 
 import com.blubank.doctorappointment.domain.entity.Patient;
+import com.blubank.doctorappointment.domain.vo.Appointment;
 import com.blubank.doctorappointment.infrastructure.output.BaseEntity;
 import com.blubank.doctorappointment.infrastructure.output.appointment.AppointmentEntity;
+import com.blubank.doctorappointment.infrastructure.output.doctor.DoctorEntity;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
@@ -40,10 +43,25 @@ public class PatientEntity extends BaseEntity {
         this.phoneNumber = phoneNumber;
     }
 
+    public void setAppointments(Set<AppointmentEntity> appointments) {
+        this.appointments = appointments;
+    }
+
+    public void addAppointment(AppointmentEntity appointmentEntity) {
+        appointmentEntity.setPatient(this);
+        this.appointments.add(appointmentEntity);
+    }
+
     public Set<AppointmentEntity> getAppointments() {
         return appointments;
     }
 
+    public static PatientEntity from(Patient patient) {
+        PatientEntity patientEntity = new PatientEntity();
+        patientEntity.setName(patient.getFullName().getFullName());
+        patientEntity.setPhoneNumber(patient.getPhoneNumber().getPhoneNumber());
+        return patientEntity;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -59,10 +77,8 @@ public class PatientEntity extends BaseEntity {
     }
 
     public Patient toDomain() {
-        return Patient.of(this.getId(), this.getName(),this.getPhoneNumber(),
-                appointments != null ?
-                        appointments.stream().map(AppointmentEntity::toDomain).collect(Collectors.toList())
-                        : List.of()
+        return Patient.of(this.getId(), this.getName(), this.getPhoneNumber(),
+                appointments.stream().map(AppointmentEntity::toDomain).collect(Collectors.toList())
         );
     }
 }

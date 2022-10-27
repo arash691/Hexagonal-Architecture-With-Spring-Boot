@@ -14,8 +14,8 @@ import java.util.Objects;
 /**
  * @author a.ariani
  */
-@Table(name = "open_time_tbl",uniqueConstraints ={@UniqueConstraint(name = "UC_UNIQUE_TIME_PER_DOC",columnNames = {"visit_date","start_time","end_time","doctor_id"})})
-@Entity
+//@Table(name = "open_time_tbl",uniqueConstraints ={@UniqueConstraint(name = "UC_UNIQUE_TIME_PER_DOC",columnNames = {"visit_date","start_time","end_time","doctor_id"})})
+//@Entity
 public class OpenTimeEntity extends BaseEntity {
     @Column(name = "visit_date", nullable = false)
     private LocalDate visitDate;
@@ -37,10 +37,10 @@ public class OpenTimeEntity extends BaseEntity {
         return openTimeEntity;
     }
 
-    public OpenTime toDomain() {
+/*    public OpenTime toDomain() {
         return OpenTime.of(ID.of(getId()), getVisitDate(), getStartTime(), getEndTime()
                 , Doctor.of(getDoctor().getId(), getDoctor().getMedicalNo(), getDoctor().getFullName()));
-    }
+    }*/
 
     public LocalDate getVisitDate() {
         return visitDate;

@@ -18,23 +18,17 @@ import java.util.Optional;
 @Repository
 public interface DoctorRepository extends JpaRepository<DoctorEntity,Long> {
 
-    @EntityGraph(attributePaths = {"openTimes", "appointments"})
+    @EntityGraph(attributePaths = {"appointments"})
     Optional<DoctorEntity> findDetailById(Long id);
 
     Optional<DoctorEntityRoot> findRootById(Long id);
 
-    @Query(value = "SELECT o.visitDate AS visitDate,o.startTime AS startTime , o.endTime AS endTime" +
-            " FROM DoctorEntity d INNER JOIN d.openTimes o" +
-            " WHERE d.id = ?1 AND o.id NOT IN(SELECT ap.openTime FROM AppointmentEntity ap WHERE d.id=?1)")
-    List<DoctorOpenTime> findDoctorOpenTimesById(Long id);
-
-    @Query(value = "SELECT o.visitDate AS visitDate,o.startTime AS startTime,o.endTime AS endTime," +
-            "p.name AS name,p.phoneNumber AS phoneNumber FROM DoctorEntity d " +
+    @Query(value = "SELECT ap.id.visitDate AS visitDate,ap.id.startTime AS startTime,ap.id.endTime AS endTime," +
+            "p.name AS name,p.phoneNumber AS phoneNumber , ap.version AS version FROM DoctorEntity d " +
             " INNER JOIN AppointmentEntity ap ON d.id = ap.doctor.id" +
-            " INNER JOIN OpenTimeEntity o ON ap.openTime.id=o.id" +
-            " INNER JOIN PatientEntity p ON ap.patient.id=p.id" +
+            " LEFT JOIN PatientEntity p ON ap.patient.id=p.id" +
             " WHERE d.id=?1")
-    List<DoctorTakenTime> findDoctorTakenTimesById(Long id);
+    List<DoctorAppointment> findDoctorAppointmentById(Long id);
 
     interface DoctorEntityRoot {
         Long getId();
@@ -50,6 +44,7 @@ public interface DoctorRepository extends JpaRepository<DoctorEntity,Long> {
         }
     }
 
+/*
     interface DoctorOpenTime {
         LocalDate getVisitDate();
 
@@ -63,8 +58,9 @@ public interface DoctorRepository extends JpaRepository<DoctorEntity,Long> {
                     doctorOpenTime.getEndTime());
         }
     }
+*/
 
-    interface DoctorTakenTime {
+    interface DoctorAppointment {
         LocalDate getVisitDate();
 
         LocalTime getStartTime();
@@ -75,13 +71,16 @@ public interface DoctorRepository extends JpaRepository<DoctorEntity,Long> {
 
         String getName();
 
-        static Appointment toDomain(DoctorTakenTime doctorTakenTime) {
+        Integer getVersion();
+
+        static Appointment toDomain(DoctorAppointment doctorAppointment) {
             return Appointment.of(null,
-                    Patient.of(null, doctorTakenTime.getName()
-                            , doctorTakenTime.getPhoneNumber()),
-                    OpenTime.of(doctorTakenTime.getVisitDate(),
-                            doctorTakenTime.getStartTime(),
-                            doctorTakenTime.getEndTime()));
+                    doctorAppointment.getPhoneNumber() != null &&
+                            doctorAppointment.getName() != null ? Patient.of(null, doctorAppointment.getName()
+                            , doctorAppointment.getPhoneNumber()) : null,
+                    OpenTime.of(doctorAppointment.getVisitDate(),
+                            doctorAppointment.getStartTime(),
+                            doctorAppointment.getEndTime()),doctorAppointment.getVersion());
         }
     }
 }

@@ -6,9 +6,9 @@ import com.blubank.doctorappointment.domain.exception.InvalidStartAndEndTimeExce
 import com.blubank.doctorappointment.domain.exception.NullMedicalNoException;
 import com.blubank.doctorappointment.domain.vo.ID;
 import com.blubank.doctorappointment.domain.vo.OpenTime;
-import com.blubank.doctorappointment.infrastructure.input.request.CreateDoctor;
-import com.blubank.doctorappointment.infrastructure.input.request.CreateOpenTime;
-import com.blubank.doctorappointment.infrastructure.input.request.RemoveOpenTime;
+import com.blubank.doctorappointment.infrastructure.input.request.CreateDoctorRequest;
+import com.blubank.doctorappointment.infrastructure.input.request.CreateOpenTimeRequest;
+import com.blubank.doctorappointment.infrastructure.input.request.RemoveOpenTimeRequest;
 import com.blubank.doctorappointment.infrastructure.input.response.ResponseFactory;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,15 +31,15 @@ public class DoctorRestApiAdaptor {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody CreateDoctor createDoctor) {
-        return ResponseEntity.ok(doctorServicePort.create(createDoctor.toDomain()));
+    public ResponseEntity<?> create(@RequestBody CreateDoctorRequest createDoctorRequest) {
+        return ResponseEntity.ok(doctorServicePort.create(createDoctorRequest.toDomain()));
     }
 
 
     @PostMapping(path = "/{id}/open-times")
-    public ResponseEntity<?> addOpenTimes(@PathVariable(name = "id") Long id, @Validated @RequestBody CreateOpenTime createOpenTime) {
+    public ResponseEntity<?> addOpenTimes(@PathVariable(name = "id") Long id, @Validated @RequestBody CreateOpenTimeRequest createOpenTimeRequest) {
         try {
-            Doctor openTime = doctorServicePort.createOpenTime(ID.of(id), OpenTime.of(createOpenTime.getVisitDate(), createOpenTime.getStartTime(), createOpenTime.getEndTime()));
+            Doctor openTime = doctorServicePort.createOpenTime(ID.of(id), OpenTime.of(createOpenTimeRequest.getVisitDate(), createOpenTimeRequest.getStartTime(), createOpenTimeRequest.getEndTime()));
             return ResponseFactory.ok(openTime);
         } catch (InvalidStartAndEndTimeException | NullMedicalNoException e) {
             return ResponseFactory.badRequest(e.getMessage());
@@ -53,8 +53,8 @@ public class DoctorRestApiAdaptor {
 
     @DeleteMapping(path = "/{id}/open-times")
     public ResponseEntity<?> deleteOpenTimes(@PathVariable(name = "id") Long id,
-                                             @RequestBody RemoveOpenTime removeOpenTimes) {
-        doctorServicePort.removeOpenTime(ID.of(id), removeOpenTimes.toDomain());
+                                             @RequestBody RemoveOpenTimeRequest openTime) {
+        doctorServicePort.removeOpenTime(ID.of(id), openTime.toDomain());
         return ResponseFactory.noContent("deleted");
     }
 }
