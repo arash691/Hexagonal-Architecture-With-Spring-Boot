@@ -1,7 +1,7 @@
 package com.blubank.doctorappointment.application.ports.input;
 
 
-import com.blubank.doctorappointment.application.query.DoctorAppointment;
+import com.blubank.doctorappointment.application.dto.DoctorAppointment;
 import com.blubank.doctorappointment.domain.entity.Doctor;
 import com.blubank.doctorappointment.domain.vo.OpenTime;
 import com.blubank.doctorappointment.domain.vo.*;

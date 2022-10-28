@@ -7,6 +7,7 @@ import com.blubank.doctorappointment.domain.exception.EmptyFullNameException;
 import com.blubank.doctorappointment.domain.exception.EmptyPhoneNumberException;
 import com.blubank.doctorappointment.domain.vo.ID;
 import com.blubank.doctorappointment.domain.vo.OpenTime;
+import com.blubank.doctorappointment.domain.vo.PhoneNumber;
 import com.blubank.doctorappointment.domain.vo.VisitDate;
 import com.blubank.doctorappointment.infrastructure.input.request.PatientTakeAppointmentRequest;
 import com.blubank.doctorappointment.infrastructure.input.response.ResponseFactory;
@@ -51,5 +52,10 @@ public class PatientRestApiAdaptor {
          catch (EmptyFullNameException | EmptyPhoneNumberException e) {
              return ResponseFactory.badRequest(e.getMessage());
          }
+    }
+
+    @GetMapping(path = "/appointments")
+    public ResponseEntity<?> findAllAppointments(@RequestParam(name = "phone-number") String phoneNumber) {
+        return ResponseFactory.ok(patientServicePort.findAllAppointmentsByPhoneNumber(PhoneNumber.of(phoneNumber)));
     }
 }

@@ -1,11 +1,7 @@
-package com.blubank.doctorappointment.application.query;
+package com.blubank.doctorappointment.application.dto;
 
 import com.blubank.doctorappointment.domain.vo.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
-
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author a.ariani
@@ -26,13 +22,11 @@ public class DoctorAppointment {
         this.phoneNumber = phoneNumber;
     }
 
-    public static List<DoctorAppointment> from(List<Appointment> appointments) {
-        return appointments.stream()
-                .map(appointment -> new DoctorAppointment(appointment.getOpenTime().getVisitDate()
-                        , appointment.getOpenTime().getTimeDuration(),
-                        appointment.getPatient() != null ? appointment.getPatient().getFullName() : null,
-                        appointment.getPatient() != null ? appointment.getPatient().getPhoneNumber() : null))
-                .collect(Collectors.toList());
+    public static DoctorAppointment from(Appointment appointment) {
+        return new DoctorAppointment(appointment.getOpenTime().getVisitDate()
+                , appointment.getOpenTime().getTimeDuration(),
+                appointment.getPatient() != null ? appointment.getPatient().getFullName() : null,
+                appointment.getPatient() != null ? appointment.getPatient().getPhoneNumber() : null);
     }
 
 

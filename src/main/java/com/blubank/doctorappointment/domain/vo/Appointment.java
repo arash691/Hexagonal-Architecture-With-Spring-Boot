@@ -23,8 +23,8 @@ public class Appointment {
     public static Appointment of(Doctor doctor,Patient patient,OpenTime openTime,Integer version) {
         return new Appointment(doctor, patient, openTime, version);
     }
-    public static Appointment of(ID doctorId,ID patientId,OpenTime openTime,Integer version) {
-        return new Appointment(Doctor.of(doctorId.getId()), Patient.of(patientId), openTime, version);
+    public static Appointment of(Long doctorId,Long patientId,OpenTime openTime,Integer version) {
+        return new Appointment(Doctor.of(doctorId), Patient.of(patientId), openTime, version);
     }
 
     public Doctor getDoctor() {

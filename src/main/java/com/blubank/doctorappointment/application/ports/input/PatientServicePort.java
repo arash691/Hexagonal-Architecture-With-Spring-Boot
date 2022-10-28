@@ -1,5 +1,6 @@
 package com.blubank.doctorappointment.application.ports.input;
 
+import com.blubank.doctorappointment.application.dto.PatientAppointment;
 import com.blubank.doctorappointment.domain.entity.Doctor;
 import com.blubank.doctorappointment.domain.entity.Patient;
 import com.blubank.doctorappointment.domain.vo.OpenTime;
@@ -12,6 +13,6 @@ public interface PatientServicePort {
 
     Patient createAppointment(Doctor doctor, Patient patient, OpenTime openTime);
 
-    List<Appointment> findAllAppointmentsByPhoneNumber(PhoneNumber phoneNumber);
+    List<PatientAppointment> findAllAppointmentsByPhoneNumber(PhoneNumber phoneNumber);
 
 }

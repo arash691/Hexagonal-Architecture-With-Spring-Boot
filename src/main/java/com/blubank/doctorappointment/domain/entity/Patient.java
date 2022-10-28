@@ -46,8 +46,8 @@ public class Patient {
         return new Patient(ID.of(id), FullName.of(fullName), PhoneNumber.of(phoneNumber), appointments);
     }
 
-    public static Patient of(ID patientId) {
-        return new Patient(patientId);
+    public static Patient of(Long patientId) {
+        return new Patient(ID.of(patientId));
     }
 
     public ID getId() {

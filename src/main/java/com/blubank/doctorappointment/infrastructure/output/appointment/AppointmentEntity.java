@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.security.access.method.P;
+
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -130,7 +130,7 @@ public class AppointmentEntity implements Serializable {
     }
 
     public Appointment toDomain() {
-        return Appointment.of(ID.of(doctor.getId()), patient != null ? ID.of(patient.getId()) : null,
+        return Appointment.of(doctor.getId(), patient != null ? patient.getId() : null,
                 OpenTime.of(id.getVisitDate(), id.getStartTime(), id.getEndTime()), version);
     }
 
