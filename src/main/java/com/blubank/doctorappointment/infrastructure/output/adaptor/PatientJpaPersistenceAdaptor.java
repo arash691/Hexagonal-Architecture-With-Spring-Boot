@@ -52,7 +52,7 @@ public class PatientJpaPersistenceAdaptor implements PatientPersistencePort {
                 .orElseThrow(() -> {
                     throw new DomainNotFoundException("time not found");
                 });
-        if (appointmentEntity.getPatient() != null) {
+        if (appointmentEntity.getPatient() == null) {
             PatientEntity entity = PatientEntity.from(patient);
             entity.addAppointment(appointmentEntity);
             PatientEntity save = this.patientRepository.save(entity);
