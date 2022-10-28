@@ -25,7 +25,7 @@ public class Patient {
         setPhoneNumber(phoneNumber);
     }
 
-    private Patient(ID id, FullName fullName, PhoneNumber phoneNumber , List<Appointment> appointments) {
+    private Patient(ID id, FullName fullName, PhoneNumber phoneNumber, List<Appointment> appointments) {
         this.id = id;
         setFullName(fullName);
         setPhoneNumber(phoneNumber);
@@ -35,14 +35,16 @@ public class Patient {
     public Patient(ID patientId) {
         this.id = patientId;
     }
+
     public static Patient of(String fullName, String phoneNumber) {
         return new Patient(null, FullName.of(fullName), PhoneNumber.of(phoneNumber));
     }
-    public static Patient of(Long id, String fullName, String phoneNumber){
-        return new Patient(ID.of(id),FullName.of(fullName),PhoneNumber.of(phoneNumber));
+
+    public static Patient of(Long id, String fullName, String phoneNumber) {
+        return new Patient(ID.of(id), FullName.of(fullName), PhoneNumber.of(phoneNumber));
     }
 
-    public static Patient of(Long id, String fullName, String phoneNumber,List<Appointment> appointments) {
+    public static Patient of(Long id, String fullName, String phoneNumber, List<Appointment> appointments) {
         return new Patient(ID.of(id), FullName.of(fullName), PhoneNumber.of(phoneNumber), appointments);
     }
 

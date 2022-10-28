@@ -2,6 +2,7 @@ package com.blubank.doctorappointment.infrastructure.input.request;
 
 import com.blubank.doctorappointment.domain.vo.OpenTime;
 import com.blubank.doctorappointment.domain.vo.TimeDuration;
+
 import java.time.LocalDate;
 
 /**

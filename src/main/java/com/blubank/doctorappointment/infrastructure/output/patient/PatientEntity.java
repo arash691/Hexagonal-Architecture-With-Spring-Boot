@@ -1,7 +1,6 @@
 package com.blubank.doctorappointment.infrastructure.output.patient;
 
 import com.blubank.doctorappointment.domain.entity.Patient;
-import com.blubank.doctorappointment.domain.vo.Appointment;
 import com.blubank.doctorappointment.infrastructure.output.BaseEntity;
 import com.blubank.doctorappointment.infrastructure.output.appointment.AppointmentEntity;
 
@@ -25,6 +24,13 @@ public class PatientEntity extends BaseEntity {
     @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private Set<AppointmentEntity> appointments = new HashSet<>();
 
+    public static PatientEntity from(Patient patient) {
+        PatientEntity patientEntity = new PatientEntity();
+        patientEntity.setName(patient.getFullName().getFullName());
+        patientEntity.setPhoneNumber(patient.getPhoneNumber().getPhoneNumber());
+        return patientEntity;
+    }
+
     public String getName() {
         return name;
     }
@@ -41,10 +47,6 @@ public class PatientEntity extends BaseEntity {
         this.phoneNumber = phoneNumber;
     }
 
-    public void setAppointments(Set<AppointmentEntity> appointments) {
-        this.appointments = appointments;
-    }
-
     public void addAppointment(AppointmentEntity appointmentEntity) {
         appointmentEntity.setPatient(this);
         this.appointments.add(appointmentEntity);
@@ -54,11 +56,8 @@ public class PatientEntity extends BaseEntity {
         return appointments;
     }
 
-    public static PatientEntity from(Patient patient) {
-        PatientEntity patientEntity = new PatientEntity();
-        patientEntity.setName(patient.getFullName().getFullName());
-        patientEntity.setPhoneNumber(patient.getPhoneNumber().getPhoneNumber());
-        return patientEntity;
+    public void setAppointments(Set<AppointmentEntity> appointments) {
+        this.appointments = appointments;
     }
 
     @Override

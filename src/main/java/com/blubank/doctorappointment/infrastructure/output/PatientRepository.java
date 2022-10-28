@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface PatientRepository extends JpaRepository<PatientEntity,Long> {
+public interface PatientRepository extends JpaRepository<PatientEntity, Long> {
     @EntityGraph(attributePaths = {"appointments"})
     Optional<PatientEntity> findDetailById(Long id);
 
@@ -28,6 +28,14 @@ public interface PatientRepository extends JpaRepository<PatientEntity,Long> {
     List<PatientAppointment> findAppointmentByPhoneNumber(String phoneNumber);
 
     interface PatientAppointment {
+        static Appointment toDomain(PatientAppointment patientAppointment) {
+            return Appointment.of(Doctor.of(patientAppointment.getDoctorId()),
+                    Patient.of(patientAppointment.getPatientId()),
+                    OpenTime.of(patientAppointment.getVisitDate(),
+                            patientAppointment.getStartTime(),
+                            patientAppointment.getEndTime()), patientAppointment.getVersion());
+        }
+
         LocalDate getVisitDate();
 
         LocalTime getStartTime();
@@ -39,14 +47,6 @@ public interface PatientRepository extends JpaRepository<PatientEntity,Long> {
         Long getPatientId();
 
         Integer getVersion();
-
-        static Appointment toDomain(PatientAppointment patientAppointment) {
-            return Appointment.of(Doctor.of(patientAppointment.getDoctorId()),
-                    Patient.of(patientAppointment.getPatientId()),
-                    OpenTime.of(patientAppointment.getVisitDate(),
-                            patientAppointment.getStartTime(),
-                            patientAppointment.getEndTime()), patientAppointment.getVersion());
-        }
 
 
     }

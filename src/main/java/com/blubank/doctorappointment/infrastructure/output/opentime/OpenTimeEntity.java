@@ -4,7 +4,11 @@ import com.blubank.doctorappointment.domain.vo.OpenTime;
 import com.blubank.doctorappointment.infrastructure.output.BaseEntity;
 import com.blubank.doctorappointment.infrastructure.output.doctor.DoctorEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
@@ -26,7 +30,7 @@ public class OpenTimeEntity extends BaseEntity {
     @JoinColumn(nullable = false, referencedColumnName = "id", name = "doctor_id")
     private DoctorEntity doctor;
 
-    public static OpenTimeEntity from(DoctorEntity doctor , OpenTime openTime){
+    public static OpenTimeEntity from(DoctorEntity doctor, OpenTime openTime) {
         OpenTimeEntity openTimeEntity = new OpenTimeEntity();
         openTimeEntity.setVisitDate(openTime.getVisitDate().getVisitDate());
         openTimeEntity.setStartTime(openTime.getTimeDuration().getStart());

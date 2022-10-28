@@ -21,8 +21,10 @@ public class AppointmentPK implements Serializable {
     @Column(name = "end_time", nullable = false)
     private LocalTime endTime;
 
-    public AppointmentPK(){}
-    public AppointmentPK(Long doctorId,LocalDate visitDate, LocalTime startTime, LocalTime endTime) {
+    public AppointmentPK() {
+    }
+
+    public AppointmentPK(Long doctorId, LocalDate visitDate, LocalTime startTime, LocalTime endTime) {
         this.doctorId = doctorId;
         this.visitDate = visitDate;
         this.startTime = startTime;

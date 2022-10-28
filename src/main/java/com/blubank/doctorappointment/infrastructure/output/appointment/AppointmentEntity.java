@@ -1,7 +1,6 @@
 package com.blubank.doctorappointment.infrastructure.output.appointment;
 
 import com.blubank.doctorappointment.domain.vo.Appointment;
-import com.blubank.doctorappointment.domain.vo.ID;
 import com.blubank.doctorappointment.domain.vo.OpenTime;
 import com.blubank.doctorappointment.infrastructure.output.doctor.DoctorEntity;
 import com.blubank.doctorappointment.infrastructure.output.patient.PatientEntity;
@@ -9,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -60,17 +58,17 @@ public class AppointmentEntity implements Serializable {
         this.isActive = true;
     }
 
-    public AppointmentEntity(DoctorEntity doctor, PatientEntity patient,LocalDate visitDate,
-                             LocalTime startTime,LocalTime endTime,Integer version) {
+    public AppointmentEntity(DoctorEntity doctor, PatientEntity patient, LocalDate visitDate,
+                             LocalTime startTime, LocalTime endTime, Integer version) {
         this.id = new AppointmentPK(doctor.getId(), visitDate, startTime, endTime);
         this.doctor = doctor;
         this.patient = patient;
         this.isActive = true;
-        this.version=version;
+        this.version = version;
     }
 
-    public static AppointmentEntity from(DoctorEntity doctorEntity,PatientEntity patientEntity,
-                                         OpenTime openTime,Integer version) {
+    public static AppointmentEntity from(DoctorEntity doctorEntity, PatientEntity patientEntity,
+                                         OpenTime openTime, Integer version) {
         return new AppointmentEntity(doctorEntity, patientEntity, openTime.getVisitDate().getVisitDate(),
                 openTime.getTimeDuration().getStart(),
                 openTime.getTimeDuration().getEnd(), version);

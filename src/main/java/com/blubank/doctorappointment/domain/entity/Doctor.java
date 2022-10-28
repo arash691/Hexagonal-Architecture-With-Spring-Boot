@@ -1,6 +1,7 @@
 package com.blubank.doctorappointment.domain.entity;
 
 import com.blubank.doctorappointment.domain.predicates.IsNotLessThan30MinDuration;
+import com.blubank.doctorappointment.domain.predicates.IsNotNullOrEmptyFullName;
 import com.blubank.doctorappointment.domain.predicates.IsNullMedicalNo;
 import com.blubank.doctorappointment.domain.predicates.IsValidStartAndEndTime;
 import com.blubank.doctorappointment.domain.vo.*;
@@ -8,7 +9,6 @@ import com.blubank.doctorappointment.domain.vo.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,8 +21,8 @@ public class Doctor {
     private FullName fullName;
     private List<Appointment> appointments;
 
-    private Doctor(ID id){
-        this.id= id;
+    private Doctor(ID id) {
+        this.id = id;
     }
 
     private Doctor(ID id, MedicalNo medicalNo, FullName fullName) {
@@ -31,13 +31,14 @@ public class Doctor {
         setFullName(fullName);
     }
 
-    private Doctor(ID id, MedicalNo medicalNo, FullName fullName,List<Appointment> appointments) {
+    private Doctor(ID id, MedicalNo medicalNo, FullName fullName, List<Appointment> appointments) {
         this.id = id;
         setMedicalNo(medicalNo);
         setFullName(fullName);
         this.appointments = appointments;
     }
-    public static Doctor of(Long id,Long medicalNo,String fullName) {
+
+    public static Doctor of(Long id, Long medicalNo, String fullName) {
         return new Doctor(ID.of(id), MedicalNo.of(medicalNo), FullName.of(fullName));
     }
 
@@ -71,6 +72,7 @@ public class Doctor {
     }
 
     public void setFullName(FullName fullName) {
+        new IsNotNullOrEmptyFullName().check(fullName);
         this.fullName = fullName;
     }
 

@@ -20,10 +20,12 @@ public class Appointment {
         this.openTime = openTime;
         this.version = version;
     }
-    public static Appointment of(Doctor doctor,Patient patient,OpenTime openTime,Integer version) {
+
+    public static Appointment of(Doctor doctor, Patient patient, OpenTime openTime, Integer version) {
         return new Appointment(doctor, patient, openTime, version);
     }
-    public static Appointment of(Long doctorId,Long patientId,OpenTime openTime,Integer version) {
+
+    public static Appointment of(Long doctorId, Long patientId, OpenTime openTime, Integer version) {
         return new Appointment(Doctor.of(doctorId), Patient.of(patientId), openTime, version);
     }
 

@@ -1,7 +1,7 @@
 package com.blubank.doctorappointment.infrastructure.input.exception;
 
-import com.blubank.doctorappointment.domain.exception.RemoveDomainException;
 import com.blubank.doctorappointment.domain.exception.DomainNotFoundException;
+import com.blubank.doctorappointment.domain.exception.RemoveDomainException;
 import com.blubank.doctorappointment.infrastructure.input.response.ResponseFactory;
 import com.blubank.doctorappointment.infrastructure.input.response.RestResponse;
 import com.fasterxml.jackson.core.JsonParseException;

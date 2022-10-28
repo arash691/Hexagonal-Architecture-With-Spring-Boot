@@ -2,6 +2,7 @@ package com.blubank.doctorappointment.infrastructure.input.response;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import java.net.URI;
 
 

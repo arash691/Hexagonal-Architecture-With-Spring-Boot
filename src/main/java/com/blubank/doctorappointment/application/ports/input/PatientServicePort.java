@@ -4,7 +4,8 @@ import com.blubank.doctorappointment.application.dto.PatientAppointment;
 import com.blubank.doctorappointment.domain.entity.Doctor;
 import com.blubank.doctorappointment.domain.entity.Patient;
 import com.blubank.doctorappointment.domain.vo.OpenTime;
-import com.blubank.doctorappointment.domain.vo.*;
+import com.blubank.doctorappointment.domain.vo.PhoneNumber;
+import com.blubank.doctorappointment.domain.vo.VisitDate;
 
 import java.util.List;
 

@@ -2,9 +2,9 @@ package com.blubank.doctorappointment.infrastructure.output.adaptor;
 
 import com.blubank.doctorappointment.application.ports.output.PatientPersistencePort;
 import com.blubank.doctorappointment.domain.entity.Doctor;
-import com.blubank.doctorappointment.domain.vo.*;
 import com.blubank.doctorappointment.domain.entity.Patient;
 import com.blubank.doctorappointment.domain.exception.DomainNotFoundException;
+import com.blubank.doctorappointment.domain.vo.*;
 import com.blubank.doctorappointment.infrastructure.output.AppointmentRepository;
 import com.blubank.doctorappointment.infrastructure.output.PatientRepository;
 import com.blubank.doctorappointment.infrastructure.output.appointment.AppointmentEntity;

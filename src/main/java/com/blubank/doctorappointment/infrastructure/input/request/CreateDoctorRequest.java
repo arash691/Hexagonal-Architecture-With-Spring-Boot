@@ -25,7 +25,7 @@ public class CreateDoctorRequest {
         this.medicalNo = medicalNo;
     }
 
-    public Doctor toDomain(){
-        return Doctor.of(null,medicalNo,fullName);
+    public Doctor toDomain() {
+        return Doctor.of(null, medicalNo, fullName);
     }
 }

@@ -21,6 +21,12 @@ public class PatientAppointment {
         this.endTime = endTime;
     }
 
+    public static PatientAppointment from(Appointment appointment) {
+        return new PatientAppointment(appointment.getOpenTime().getVisitDate().getVisitDate(),
+                appointment.getOpenTime().getTimeDuration().getStart(),
+                appointment.getOpenTime().getTimeDuration().getEnd());
+    }
+
     public LocalDate getVisitDate() {
         return visitDate;
     }
@@ -43,11 +49,5 @@ public class PatientAppointment {
 
     public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
-    }
-
-    public static PatientAppointment from(Appointment appointment) {
-        return new PatientAppointment(appointment.getOpenTime().getVisitDate().getVisitDate(),
-                appointment.getOpenTime().getTimeDuration().getStart(),
-                appointment.getOpenTime().getTimeDuration().getEnd());
     }
 }

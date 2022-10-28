@@ -24,16 +24,16 @@ public interface AppointmentRepository extends JpaRepository<AppointmentEntity, 
     List<OpenAppointment> findOpenTimeByVisitDate(@Param("visitDate") LocalDate visitDate);
 
     interface OpenAppointment {
-        LocalDate getVisitDate();
-
-        LocalTime getStartTime();
-
-        LocalTime getEndTime();
-
         static OpenTime toDomain(OpenAppointment openAppointment) {
             return OpenTime.of(openAppointment.getVisitDate(),
                     openAppointment.getStartTime(),
                     openAppointment.getEndTime());
         }
+
+        LocalDate getVisitDate();
+
+        LocalTime getStartTime();
+
+        LocalTime getEndTime();
     }
 }

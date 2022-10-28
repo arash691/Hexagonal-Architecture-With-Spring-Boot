@@ -1,14 +1,15 @@
 package com.blubank.doctorappointment.infrastructure.output;
 
 import com.blubank.doctorappointment.domain.entity.Doctor;
-import com.blubank.doctorappointment.domain.vo.OpenTime;
 import com.blubank.doctorappointment.domain.entity.Patient;
 import com.blubank.doctorappointment.domain.vo.Appointment;
+import com.blubank.doctorappointment.domain.vo.OpenTime;
 import com.blubank.doctorappointment.infrastructure.output.doctor.DoctorEntity;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.Optional;
 
 
 @Repository
-public interface DoctorRepository extends JpaRepository<DoctorEntity,Long> {
+public interface DoctorRepository extends JpaRepository<DoctorEntity, Long> {
 
     @EntityGraph(attributePaths = {"appointments"})
     Optional<DoctorEntity> findDetailById(Long id);
@@ -31,17 +32,17 @@ public interface DoctorRepository extends JpaRepository<DoctorEntity,Long> {
     List<DoctorAppointment> findDoctorAppointmentById(Long id);
 
     interface DoctorEntityRoot {
-        Long getId();
-
-        String getFullName();
-
-        Long getMedicalNo();
-
         static Doctor toDomain(DoctorEntityRoot doctorRootEntity) {
             return Doctor.of(doctorRootEntity.getId(),
                     doctorRootEntity.getMedicalNo(),
                     doctorRootEntity.getFullName());
         }
+
+        Long getId();
+
+        String getFullName();
+
+        Long getMedicalNo();
     }
 
 /*
@@ -61,6 +62,16 @@ public interface DoctorRepository extends JpaRepository<DoctorEntity,Long> {
 */
 
     interface DoctorAppointment {
+        static Appointment toDomain(DoctorAppointment doctorAppointment) {
+            return Appointment.of(null,
+                    doctorAppointment.getPhoneNumber() != null &&
+                            doctorAppointment.getName() != null ? Patient.of(null, doctorAppointment.getName()
+                            , doctorAppointment.getPhoneNumber()) : null,
+                    OpenTime.of(doctorAppointment.getVisitDate(),
+                            doctorAppointment.getStartTime(),
+                            doctorAppointment.getEndTime()), doctorAppointment.getVersion());
+        }
+
         LocalDate getVisitDate();
 
         LocalTime getStartTime();
@@ -72,15 +83,5 @@ public interface DoctorRepository extends JpaRepository<DoctorEntity,Long> {
         String getName();
 
         Integer getVersion();
-
-        static Appointment toDomain(DoctorAppointment doctorAppointment) {
-            return Appointment.of(null,
-                    doctorAppointment.getPhoneNumber() != null &&
-                            doctorAppointment.getName() != null ? Patient.of(null, doctorAppointment.getName()
-                            , doctorAppointment.getPhoneNumber()) : null,
-                    OpenTime.of(doctorAppointment.getVisitDate(),
-                            doctorAppointment.getStartTime(),
-                            doctorAppointment.getEndTime()),doctorAppointment.getVersion());
-        }
     }
 }

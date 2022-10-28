@@ -13,11 +13,11 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan(basePackages = {"com.blubank.doctorappointment.infrastructure"})
 @EnableConfigurationProperties
 @EnableJpaRepositories("com.blubank.doctorappointment.infrastructure")
-@SpringBootApplication(scanBasePackages= "com.blubank.doctorappointment.infrastructure")
+@SpringBootApplication(scanBasePackages = "com.blubank.doctorappointment.infrastructure")
 public class DoctorAppointmentApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(DoctorAppointmentApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(DoctorAppointmentApplication.class, args);
+    }
 
 }

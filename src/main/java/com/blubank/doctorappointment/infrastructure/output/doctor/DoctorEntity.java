@@ -2,11 +2,14 @@ package com.blubank.doctorappointment.infrastructure.output.doctor;
 
 import com.blubank.doctorappointment.domain.entity.Doctor;
 import com.blubank.doctorappointment.domain.vo.Appointment;
-import com.blubank.doctorappointment.domain.vo.OpenTime;
 import com.blubank.doctorappointment.infrastructure.output.BaseEntity;
 import com.blubank.doctorappointment.infrastructure.output.appointment.AppointmentEntity;
+
 import javax.persistence.*;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -19,8 +22,8 @@ public class DoctorEntity extends BaseEntity {
     private Long medicalNo;
     @Column(name = "full_name")
     private String fullName;
-/*    @OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
-    private Set<OpenTimeEntity> openTimes = new HashSet<>();*/
+    /*    @OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
+        private Set<OpenTimeEntity> openTimes = new HashSet<>();*/
     @OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private Set<AppointmentEntity> appointments = new HashSet<>();
 
@@ -32,7 +35,7 @@ public class DoctorEntity extends BaseEntity {
         Set<AppointmentEntity> appointmentEntities = new HashSet<>();
         if (doctor.getAppointments() != null && !doctor.getAppointments().isEmpty()) {
             for (Appointment appointment : doctor.getAppointments()) {
-                appointmentEntities.add(AppointmentEntity.from(doctorEntity, null, appointment.getOpenTime(),appointment.getVersion()));
+                appointmentEntities.add(AppointmentEntity.from(doctorEntity, null, appointment.getOpenTime(), appointment.getVersion()));
             }
             doctorEntity.setAppointments(appointmentEntities);
         }

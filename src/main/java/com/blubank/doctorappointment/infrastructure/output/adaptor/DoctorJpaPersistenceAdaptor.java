@@ -2,16 +2,16 @@ package com.blubank.doctorappointment.infrastructure.output.adaptor;
 
 import com.blubank.doctorappointment.application.ports.output.DoctorPersistencePort;
 import com.blubank.doctorappointment.domain.entity.Doctor;
-import com.blubank.doctorappointment.domain.exception.RemoveDomainException;
-import com.blubank.doctorappointment.domain.vo.OpenTime;
 import com.blubank.doctorappointment.domain.exception.DomainNotFoundException;
+import com.blubank.doctorappointment.domain.exception.RemoveDomainException;
 import com.blubank.doctorappointment.domain.vo.Appointment;
+import com.blubank.doctorappointment.domain.vo.ID;
+import com.blubank.doctorappointment.domain.vo.OpenTime;
 import com.blubank.doctorappointment.domain.vo.VisitDate;
 import com.blubank.doctorappointment.infrastructure.output.AppointmentRepository;
+import com.blubank.doctorappointment.infrastructure.output.DoctorRepository;
 import com.blubank.doctorappointment.infrastructure.output.appointment.AppointmentPK;
 import com.blubank.doctorappointment.infrastructure.output.doctor.DoctorEntity;
-import com.blubank.doctorappointment.domain.vo.ID;
-import com.blubank.doctorappointment.infrastructure.output.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -88,7 +88,7 @@ public class DoctorJpaPersistenceAdaptor implements DoctorPersistencePort {
                 , openTime.getTimeDuration().getEnd()))
                 .ifPresentOrElse(appointmentEntity -> {
                             if (appointmentEntity.getPatient() == null) {
-                                this.appointmentRepository.deleteOpenTime(appointmentEntity.getId(),appointmentEntity.getVersion());
+                                this.appointmentRepository.deleteOpenTime(appointmentEntity.getId(), appointmentEntity.getVersion());
                             } else {
                                 throw new RemoveDomainException("taken time could not removed");
                             }

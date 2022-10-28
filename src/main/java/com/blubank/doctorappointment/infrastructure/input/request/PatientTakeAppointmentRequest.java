@@ -1,8 +1,5 @@
 package com.blubank.doctorappointment.infrastructure.input.request;
 
-import com.blubank.doctorappointment.domain.vo.OpenTime;
-import com.blubank.doctorappointment.domain.vo.VisitDate;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 

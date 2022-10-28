@@ -16,7 +16,7 @@ public class TimeDuration {
     }
 
     public static TimeDuration of(LocalTime start, LocalTime end) {
-        return new TimeDuration(start,end);
+        return new TimeDuration(start, end);
     }
 
     public LocalTime getStart() {

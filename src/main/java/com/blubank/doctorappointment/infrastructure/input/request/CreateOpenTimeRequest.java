@@ -14,7 +14,7 @@ import java.time.LocalTime;
  */
 public class CreateOpenTimeRequest {
     @JsonDeserialize(using = LocalDateDeserializer.class)
-   @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "visit date is required")
     private LocalDate visitDate;
     @NotNull(message = "startTime is required")
@@ -22,7 +22,7 @@ public class CreateOpenTimeRequest {
     private LocalTime startTime;
     @JsonDeserialize(using = LocalTimeDeserializer.class)
     @NotNull(message = "endTime is required")
-    @JsonFormat(pattern="HH:mm")
+    @JsonFormat(pattern = "HH:mm")
     private LocalTime endTime;
 
     public LocalDate getVisitDate() {

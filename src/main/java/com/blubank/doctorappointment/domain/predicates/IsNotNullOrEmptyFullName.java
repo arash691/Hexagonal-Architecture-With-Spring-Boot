@@ -10,13 +10,13 @@ import com.blubank.doctorappointment.domain.vo.FullName;
 public class IsNotNullOrEmptyFullName extends AbstractPredicate<FullName> {
     @Override
     public void check(FullName fullName) {
-        if(test(fullName)){
+        if (!test(fullName)) {
             throw new EmptyFullNameException("fullName is required");
         }
     }
 
     @Override
     public boolean test(FullName fullName) {
-        return fullName == null || fullName.getFullName().isBlank();
+        return fullName != null && fullName.getFullName() != null && !fullName.getFullName().isBlank();
     }
 }

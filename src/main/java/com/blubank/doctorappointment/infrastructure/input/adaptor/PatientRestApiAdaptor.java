@@ -40,16 +40,15 @@ public class PatientRestApiAdaptor {
 
     @PostMapping(path = "/appointments")
     public ResponseEntity<?> takeAppointment(@RequestBody PatientTakeAppointmentRequest patientTakeAppointmentRequest) {
-         try {
-             return ResponseFactory.ok(patientServicePort.createAppointment(Doctor.of(patientTakeAppointmentRequest.getDoctorId()),
-                     Patient.of(patientTakeAppointmentRequest.getName(), patientTakeAppointmentRequest.getPhoneNumber()),
-                     OpenTime.of(patientTakeAppointmentRequest.getVisitDateInfo().getVisitDate(),
-                             patientTakeAppointmentRequest.getVisitDateInfo().getStartTime(),
-                             patientTakeAppointmentRequest.getVisitDateInfo().getEndTime())));
-         }
-         catch (EmptyFullNameException | EmptyPhoneNumberException e) {
-             return ResponseFactory.badRequest(e.getMessage());
-         }
+        try {
+            return ResponseFactory.ok(patientServicePort.createAppointment(Doctor.of(patientTakeAppointmentRequest.getDoctorId()),
+                    Patient.of(patientTakeAppointmentRequest.getName(), patientTakeAppointmentRequest.getPhoneNumber()),
+                    OpenTime.of(patientTakeAppointmentRequest.getVisitDateInfo().getVisitDate(),
+                            patientTakeAppointmentRequest.getVisitDateInfo().getStartTime(),
+                            patientTakeAppointmentRequest.getVisitDateInfo().getEndTime())));
+        } catch (EmptyFullNameException | EmptyPhoneNumberException e) {
+            return ResponseFactory.badRequest(e.getMessage());
+        }
     }
 
     @GetMapping(path = "/appointments")
