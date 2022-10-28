@@ -3,7 +3,6 @@ package com.blubank.doctorappointment.infrastructure.output;
 import com.blubank.doctorappointment.domain.entity.Doctor;
 import com.blubank.doctorappointment.domain.entity.Patient;
 import com.blubank.doctorappointment.domain.vo.Appointment;
-import com.blubank.doctorappointment.domain.vo.ID;
 import com.blubank.doctorappointment.domain.vo.OpenTime;
 import com.blubank.doctorappointment.infrastructure.output.patient.PatientEntity;
 import org.springframework.data.jpa.repository.EntityGraph;

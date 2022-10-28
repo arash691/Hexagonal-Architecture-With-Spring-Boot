@@ -4,11 +4,9 @@ import com.blubank.doctorappointment.domain.entity.Patient;
 import com.blubank.doctorappointment.domain.vo.Appointment;
 import com.blubank.doctorappointment.infrastructure.output.BaseEntity;
 import com.blubank.doctorappointment.infrastructure.output.appointment.AppointmentEntity;
-import com.blubank.doctorappointment.infrastructure.output.doctor.DoctorEntity;
 
 import javax.persistence.*;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;

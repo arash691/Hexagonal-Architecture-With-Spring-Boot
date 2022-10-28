@@ -1,8 +1,6 @@
 package com.blubank.doctorappointment.infrastructure.output.opentime;
 
-import com.blubank.doctorappointment.domain.entity.Doctor;
 import com.blubank.doctorappointment.domain.vo.OpenTime;
-import com.blubank.doctorappointment.domain.vo.ID;
 import com.blubank.doctorappointment.infrastructure.output.BaseEntity;
 import com.blubank.doctorappointment.infrastructure.output.doctor.DoctorEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;

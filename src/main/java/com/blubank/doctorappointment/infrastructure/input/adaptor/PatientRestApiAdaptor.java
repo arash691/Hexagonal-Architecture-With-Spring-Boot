@@ -5,7 +5,6 @@ import com.blubank.doctorappointment.domain.entity.Doctor;
 import com.blubank.doctorappointment.domain.entity.Patient;
 import com.blubank.doctorappointment.domain.exception.EmptyFullNameException;
 import com.blubank.doctorappointment.domain.exception.EmptyPhoneNumberException;
-import com.blubank.doctorappointment.domain.vo.ID;
 import com.blubank.doctorappointment.domain.vo.OpenTime;
 import com.blubank.doctorappointment.domain.vo.PhoneNumber;
 import com.blubank.doctorappointment.domain.vo.VisitDate;
@@ -17,7 +16,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.Table;
 import java.time.LocalDate;
 
 /**
