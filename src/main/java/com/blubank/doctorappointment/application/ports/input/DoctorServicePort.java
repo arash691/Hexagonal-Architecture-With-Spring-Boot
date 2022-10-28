@@ -1,8 +1,8 @@
 package com.blubank.doctorappointment.application.ports.input;
 
 
-import com.blubank.doctorappointment.application.dto.DoctorAppointment;
 import com.blubank.doctorappointment.domain.entity.Doctor;
+import com.blubank.doctorappointment.domain.vo.Appointment;
 import com.blubank.doctorappointment.domain.vo.ID;
 import com.blubank.doctorappointment.domain.vo.OpenTime;
 
@@ -14,7 +14,7 @@ public interface DoctorServicePort {
 
     Doctor createOpenTime(ID id, OpenTime openTime);
 
-    List<DoctorAppointment> findAllDoctorOpenAndTakenTimes(ID id);
+    List<Appointment> findAllDoctorOpenAndTakenTimes(ID id);
 
     void removeOpenTime(ID id, OpenTime openTime);
 }

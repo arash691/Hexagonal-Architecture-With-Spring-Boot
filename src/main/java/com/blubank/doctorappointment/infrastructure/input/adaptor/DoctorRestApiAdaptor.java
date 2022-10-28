@@ -9,6 +9,8 @@ import com.blubank.doctorappointment.domain.vo.OpenTime;
 import com.blubank.doctorappointment.infrastructure.input.request.CreateDoctorRequest;
 import com.blubank.doctorappointment.infrastructure.input.request.CreateOpenTimeRequest;
 import com.blubank.doctorappointment.infrastructure.input.request.RemoveOpenTimeRequest;
+import com.blubank.doctorappointment.infrastructure.input.response.DoctorAppointmentResponse;
+import com.blubank.doctorappointment.infrastructure.input.response.DoctorResponse;
 import com.blubank.doctorappointment.infrastructure.input.response.ResponseFactory;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,15 +34,14 @@ public class DoctorRestApiAdaptor {
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody CreateDoctorRequest createDoctorRequest) {
-        return ResponseEntity.ok(doctorServicePort.create(createDoctorRequest.toDomain()));
+        return ResponseFactory.ok(doctorServicePort.create(createDoctorRequest.toDomain()), DoctorResponse::from);
     }
-
 
     @PostMapping(path = "/{id}/open-times")
     public ResponseEntity<?> addOpenTimes(@PathVariable(name = "id") Long id, @Validated @RequestBody CreateOpenTimeRequest createOpenTimeRequest) {
         try {
             Doctor openTime = doctorServicePort.createOpenTime(ID.of(id), OpenTime.of(createOpenTimeRequest.getVisitDate(), createOpenTimeRequest.getStartTime(), createOpenTimeRequest.getEndTime()));
-            return ResponseFactory.ok(openTime);
+            return ResponseFactory.ok(openTime, DoctorResponse::from);
         } catch (InvalidStartAndEndTimeException | NullMedicalNoException e) {
             return ResponseFactory.badRequest(e.getMessage());
         }
@@ -48,7 +49,7 @@ public class DoctorRestApiAdaptor {
 
     @GetMapping(path = "/appointments")
     public ResponseEntity<?> getAppointments(@RequestParam(name = "id") Long id) {
-        return ResponseEntity.ok(doctorServicePort.findAllDoctorOpenAndTakenTimes(ID.of(id)));
+        return ResponseFactory.ok(doctorServicePort.findAllDoctorOpenAndTakenTimes(ID.of(id)), DoctorAppointmentResponse::from);
     }
 
     @DeleteMapping(path = "/{id}/open-times")

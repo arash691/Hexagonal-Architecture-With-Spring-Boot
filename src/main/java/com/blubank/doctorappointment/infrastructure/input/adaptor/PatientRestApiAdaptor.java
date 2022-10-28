@@ -9,6 +9,7 @@ import com.blubank.doctorappointment.domain.vo.OpenTime;
 import com.blubank.doctorappointment.domain.vo.PhoneNumber;
 import com.blubank.doctorappointment.domain.vo.VisitDate;
 import com.blubank.doctorappointment.infrastructure.input.request.PatientTakeAppointmentRequest;
+import com.blubank.doctorappointment.infrastructure.input.response.PatientAppointmentResponse;
 import com.blubank.doctorappointment.infrastructure.input.response.ResponseFactory;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,7 @@ public class PatientRestApiAdaptor {
 
     @GetMapping(path = "/appointments")
     public ResponseEntity<?> findAllAppointments(@RequestParam(name = "phone-number") String phoneNumber) {
-        return ResponseFactory.ok(patientServicePort.findAllAppointmentsByPhoneNumber(PhoneNumber.of(phoneNumber)));
+        return ResponseFactory.ok(patientServicePort.findAllAppointmentsByPhoneNumber(PhoneNumber.of(phoneNumber)),
+                PatientAppointmentResponse::from);
     }
 }

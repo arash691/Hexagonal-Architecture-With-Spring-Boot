@@ -1,13 +1,12 @@
 package com.blubank.doctorappointment.application.ports.input;
 
-import com.blubank.doctorappointment.application.dto.DoctorAppointment;
 import com.blubank.doctorappointment.application.ports.output.DoctorPersistencePort;
 import com.blubank.doctorappointment.domain.entity.Doctor;
+import com.blubank.doctorappointment.domain.vo.Appointment;
 import com.blubank.doctorappointment.domain.vo.ID;
 import com.blubank.doctorappointment.domain.vo.OpenTime;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author a.ariani
@@ -35,11 +34,8 @@ public class DoctorServicePortAdaptor implements DoctorServicePort {
     }
 
     @Override
-    public List<DoctorAppointment> findAllDoctorOpenAndTakenTimes(ID id) {
-        return this.doctorPersistencePort.findAllAppointments(id)
-                .stream()
-                .map(DoctorAppointment::from)
-                .collect(Collectors.toList());
+    public List<Appointment> findAllDoctorOpenAndTakenTimes(ID id) {
+        return this.doctorPersistencePort.findAllAppointments(id);
     }
 
     @Override

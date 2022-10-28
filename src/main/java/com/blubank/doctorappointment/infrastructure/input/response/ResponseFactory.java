@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.net.URI;
+import java.util.function.Function;
 
 
 /**
@@ -26,6 +27,14 @@ public class ResponseFactory<T> {
         response.setCode(HttpStatus.OK.value());
         return ResponseEntity.ok(response);
     }
+
+    public static <T, R> ResponseEntity<RestResponse<R>> ok(T result, Function<T, R> mapper) {
+        RestResponse<R> response = new RestResponse<>();
+        response.setBody(mapper.apply(result));
+        response.setCode(HttpStatus.OK.value());
+        return ResponseEntity.ok(response);
+    }
+
 
     public static <T> ResponseEntity<RestResponse<T>> created(T result, String message, String uri) {
         RestResponse<T> response = new RestResponse<>();
