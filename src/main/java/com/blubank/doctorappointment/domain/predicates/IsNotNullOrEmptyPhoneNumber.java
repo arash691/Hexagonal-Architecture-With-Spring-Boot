@@ -10,7 +10,7 @@ import com.blubank.doctorappointment.domain.vo.PhoneNumber;
 public class IsNotNullOrEmptyPhoneNumber extends AbstractPredicate<PhoneNumber> {
     @Override
     public void check(PhoneNumber phoneNumber) {
-        if (test(phoneNumber)) {
+        if (!test(phoneNumber)) {
             throw new EmptyPhoneNumberException("phoneNumber is required");
         }
     }

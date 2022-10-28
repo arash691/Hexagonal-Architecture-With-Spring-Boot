@@ -26,8 +26,10 @@ public class DoctorAppointmentResponse {
             doctorAppointmentResponse.setVisitDate(appointment.getOpenTime().getVisitDate().getVisitDate());
             doctorAppointmentResponse.setStartTime(appointment.getOpenTime().getTimeDuration().getStart());
             doctorAppointmentResponse.setEndTime(appointment.getOpenTime().getTimeDuration().getEnd());
-            doctorAppointmentResponse.setFullName(appointment.getPatient().getFullName().getFullName());
-            doctorAppointmentResponse.setPhoneNumber(appointment.getPatient().getPhoneNumber().getPhoneNumber());
+            doctorAppointmentResponse.setFullName(appointment.getPatient() != null && appointment.getPatient().getFullName() != null
+                    ? appointment.getPatient().getFullName().getFullName() : null);
+            doctorAppointmentResponse.setPhoneNumber(appointment.getPatient() != null && appointment.getPatient().getPhoneNumber() != null ?
+                    appointment.getPatient().getPhoneNumber().getPhoneNumber() : null);
             doctorAppointmentResponses.add(doctorAppointmentResponse);
         }
         return doctorAppointmentResponses;

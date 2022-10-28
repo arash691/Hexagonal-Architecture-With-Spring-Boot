@@ -15,6 +15,7 @@ import java.util.List;
 
 @Repository
 public interface AppointmentRepository extends JpaRepository<AppointmentEntity, AppointmentPK> {
+
     @Modifying
     @Query(value = "DELETE FROM AppointmentEntity ap WHERE ap.id=:apKey AND ap.patient.id IS NULL AND ap.version=:version")
     void deleteOpenTime(@Param("apKey") AppointmentPK appointmentPK, @Param("version") Integer version);

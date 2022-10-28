@@ -82,4 +82,12 @@ public class ResponseFactory<T> {
         response.setHasError(true);
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(response);
     }
+
+    public static <T> ResponseEntity<RestResponse<T>> conflict(String message) {
+        RestResponse<T> response = new RestResponse<>();
+        response.setCode(HttpStatus.CONFLICT.value());
+        response.setMessage(message);
+        response.setHasError(true);
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+    }
 }

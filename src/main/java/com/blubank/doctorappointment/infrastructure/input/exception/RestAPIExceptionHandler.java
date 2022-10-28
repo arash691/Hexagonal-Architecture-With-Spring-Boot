@@ -1,5 +1,6 @@
 package com.blubank.doctorappointment.infrastructure.input.exception;
 
+import com.blubank.doctorappointment.domain.exception.DomainConflictException;
 import com.blubank.doctorappointment.domain.exception.DomainNotFoundException;
 import com.blubank.doctorappointment.domain.exception.RemoveDomainException;
 import com.blubank.doctorappointment.infrastructure.input.response.ResponseFactory;
@@ -30,6 +31,12 @@ public class RestAPIExceptionHandler extends ResponseEntityExceptionHandler {
     protected ResponseEntity<?> handleEntityNotFoundException(
             DomainNotFoundException ex) {
         return ResponseFactory.notFound(ex.getMessage());
+    }
+
+    @ExceptionHandler(value = {DomainConflictException.class})
+    protected ResponseEntity<?> handleConflictException(
+            DomainConflictException ex) {
+        return ResponseFactory.conflict(ex.getMessage());
     }
 
     @ExceptionHandler(value = {JdbcSQLIntegrityConstraintViolationException.class})
