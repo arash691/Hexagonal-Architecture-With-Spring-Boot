@@ -1,13 +1,12 @@
 package com.blubank.doctorappointment;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+import org.junit.platform.suite.api.SelectClasspathResource;
+import org.junit.platform.suite.api.Suite;
+
+
+@Suite
+@SelectClasspathResource("application")
 class DoctorAppointmentResponseApplicationTests {
-
-	@Test
-	void contextLoads() {
-	}
 
 }

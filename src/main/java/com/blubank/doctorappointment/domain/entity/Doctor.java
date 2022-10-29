@@ -96,9 +96,6 @@ public class Doctor {
         return appointments;
     }
 
-    public void addAppointments(List<Appointment> appointments) {
-        this.appointments = appointments;
-    }
 
     @Override
     public boolean equals(Object o) {

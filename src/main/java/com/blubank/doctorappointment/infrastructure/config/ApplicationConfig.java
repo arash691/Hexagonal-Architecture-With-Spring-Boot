@@ -9,8 +9,8 @@ import com.blubank.doctorappointment.application.ports.output.PatientPersistence
 import com.blubank.doctorappointment.infrastructure.output.AppointmentRepository;
 import com.blubank.doctorappointment.infrastructure.output.DoctorRepository;
 import com.blubank.doctorappointment.infrastructure.output.PatientRepository;
-import com.blubank.doctorappointment.infrastructure.output.adaptor.DoctorJpaPersistenceAdaptor;
-import com.blubank.doctorappointment.infrastructure.output.adaptor.PatientJpaPersistenceAdaptor;
+import com.blubank.doctorappointment.infrastructure.output.adaptor.DoctorPersistenceAdaptor;
+import com.blubank.doctorappointment.infrastructure.output.adaptor.PatientPersistenceAdaptor;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.models.media.StringSchema;
@@ -38,12 +38,12 @@ public class ApplicationConfig {
 
     @Bean
     public DoctorPersistencePort doctorPersistencePort(DoctorRepository doctorRepository, AppointmentRepository appointmentRepository) {
-        return new DoctorJpaPersistenceAdaptor(doctorRepository, appointmentRepository);
+        return new DoctorPersistenceAdaptor(doctorRepository, appointmentRepository);
     }
 
     @Bean
     public PatientPersistencePort patientPersistencePort(PatientRepository patientRepository, AppointmentRepository appointmentRepository) {
-        return new PatientJpaPersistenceAdaptor(patientRepository, appointmentRepository);
+        return new PatientPersistenceAdaptor(patientRepository, appointmentRepository);
     }
 
     @Bean

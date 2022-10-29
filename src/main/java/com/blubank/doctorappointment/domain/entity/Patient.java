@@ -82,10 +82,6 @@ public class Patient {
         return appointments;
     }
 
-    public void addAppointment(Appointment appointment) {
-        this.appointments.add(appointment);
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

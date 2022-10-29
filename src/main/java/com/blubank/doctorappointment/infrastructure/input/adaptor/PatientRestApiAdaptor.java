@@ -46,7 +46,8 @@ public class PatientRestApiAdaptor {
                     Patient.of(patientTakeAppointmentRequest.getName(), patientTakeAppointmentRequest.getPhoneNumber()),
                     OpenTime.of(patientTakeAppointmentRequest.getVisitDateInfo().getVisitDate(),
                             patientTakeAppointmentRequest.getVisitDateInfo().getStartTime(),
-                            patientTakeAppointmentRequest.getVisitDateInfo().getEndTime())));
+                            patientTakeAppointmentRequest.getVisitDateInfo().getEndTime())),
+                    patient -> PatientAppointmentResponse.from(patient.getAppointments()));
         } catch (EmptyFullNameException | EmptyPhoneNumberException e) {
             return ResponseFactory.badRequest(e.getMessage());
         }

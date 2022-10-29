@@ -11,7 +11,7 @@ import java.util.List;
 
 
 /**
- * Created by arash on 28.10.22.
+ * Created by arash on 21.10.22.
  */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public abstract class EntityFactoryTest {
@@ -19,6 +19,7 @@ public abstract class EntityFactoryTest {
     protected static Long id;
     protected static Long medicalNo;
     protected static String fullName;
+    protected static String phoneNumber;
     protected static OpenTime validOpenTime;
     protected static OpenTime invalidDuration;
     protected static OpenTime invalidStartingPointTime;
@@ -30,6 +31,7 @@ public abstract class EntityFactoryTest {
         id = 100L;
         medicalNo = 123456789L;
         fullName = "arash ariani";
+        phoneNumber = "09123456789";
         validOpenTime = createValidOpenTime();
         invalidDuration = createInValidDurationOpenTime();
         invalidStartingPointTime = createInvalidStaringPointTime();
