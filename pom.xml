@@ -12,7 +12,8 @@
     <artifactId>doctor-appointment</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>doctor-appointment</name>
-    <description>Demo project for blu Bank</description>
+    <description>A sample project illustrates how to use the Hexagonal Architecture in Java and Spring Boot.
+    </description>
     <properties>
         <java.version>11</java.version>
         <cucumber.version>7.0.0</cucumber.version>
