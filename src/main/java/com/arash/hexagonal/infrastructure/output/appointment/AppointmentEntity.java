@@ -1,5 +1,7 @@
 package com.arash.hexagonal.infrastructure.output.appointment;
 
+import com.arash.hexagonal.domain.entity.Doctor;
+import com.arash.hexagonal.domain.entity.Patient;
 import com.arash.hexagonal.domain.vo.Appointment;
 import com.arash.hexagonal.domain.vo.OpenTime;
 import com.arash.hexagonal.domain.vo.TimeDuration;
@@ -130,7 +132,7 @@ public class AppointmentEntity implements Serializable {
     }
 
     public Appointment toDomain() {
-        return Appointment.of(doctor.getId(), patient != null ? patient.getId() : null,
+        return new Appointment(Doctor.of(doctor.getId()), patient != null ? Patient.of(patient.getId()) : null,
                 new OpenTime(new VisitDate(id.getVisitDate()), new TimeDuration(id.getStartTime(), id.getEndTime())), version);
     }
 

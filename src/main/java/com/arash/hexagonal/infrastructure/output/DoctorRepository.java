@@ -64,7 +64,7 @@ public interface DoctorRepository extends JpaRepository<DoctorEntity, Long> {
 
     interface DoctorAppointment {
         static Appointment toDomain(DoctorAppointment doctorAppointment) {
-            return Appointment.of(null,
+            return new Appointment(null,
                     doctorAppointment.getPhoneNumber() != null &&
                             doctorAppointment.getName() != null ? Patient.of(null, doctorAppointment.getName()
                             , doctorAppointment.getPhoneNumber()) : null,

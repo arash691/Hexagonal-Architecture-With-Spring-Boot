@@ -78,7 +78,7 @@ public class Doctor {
         while (begin.isBefore(end)) {
             LocalTime plus = LocalTime.of(begin.getHour(), begin.getMinute()).plusMinutes(30);
 
-            this.appointments.add(Appointment.of(this, null, new OpenTime(new VisitDate(visitDate), new TimeDuration(begin, plus)), 0));
+            this.appointments.add(new Appointment(this, null, new OpenTime(new VisitDate(visitDate), new TimeDuration(begin, plus)), 0));
             begin = plus;
         }
     }

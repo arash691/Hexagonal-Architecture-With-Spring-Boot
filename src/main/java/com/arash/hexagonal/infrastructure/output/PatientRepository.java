@@ -31,7 +31,7 @@ public interface PatientRepository extends JpaRepository<PatientEntity, Long> {
 
     interface PatientAppointment {
         static Appointment toDomain(PatientAppointment patientAppointment) {
-            return Appointment.of(Doctor.of(patientAppointment.getDoctorId()),
+            return new Appointment(Doctor.of(patientAppointment.getDoctorId()),
                     Patient.of(patientAppointment.getPatientId()),
                     new OpenTime(new VisitDate(patientAppointment.getVisitDate()), new TimeDuration(patientAppointment.getStartTime(), patientAppointment.getEndTime())),
                     patientAppointment.getVersion());
