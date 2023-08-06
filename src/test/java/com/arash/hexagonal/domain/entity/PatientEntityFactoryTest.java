@@ -3,7 +3,7 @@ package com.arash.hexagonal.domain.entity;
 import com.arash.hexagonal.domain.exception.EmptyFullNameException;
 import com.arash.hexagonal.domain.exception.EmptyPhoneNumberException;
 import com.arash.hexagonal.domain.vo.FullName;
-import com.arash.hexagonal.domain.vo.ID;
+import com.arash.hexagonal.domain.vo.Id;
 import com.arash.hexagonal.domain.vo.PhoneNumber;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ public class PatientEntityFactoryTest extends EntityFactoryTest {
     @DisplayName("givenSimpleId_WhenCreatePatientEntity_ThenPatientEntityIdIsEqualsWithSimpleId")
     public void givenSimpleId_WhenCreatePatientEntity_ThenPatientEntityIdIsEqualsWithSimpleId() {
         Patient patient = Patient.of(id);
-        assertEquals(patient.getId(), ID.of(id));
+        assertEquals(patient.getId(), Id.of(id));
     }
 
     @Test

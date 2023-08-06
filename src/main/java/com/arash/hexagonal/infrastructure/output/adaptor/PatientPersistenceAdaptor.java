@@ -46,7 +46,7 @@ public class PatientPersistenceAdaptor implements PatientPersistencePort {
     @Transactional
     @Override
     public Patient createAppointment(Doctor doctor, Patient patient, OpenTime openTime) {
-        AppointmentEntity appointmentEntity = this.appointmentRepository.findById(new AppointmentPK(doctor.getId().getId(), openTime.visitDate().value(),
+        AppointmentEntity appointmentEntity = this.appointmentRepository.findById(new AppointmentPK(doctor.getId().value(), openTime.visitDate().value(),
                         openTime.timeDuration().begin(),
                         openTime.timeDuration().end()))
                 .orElseThrow(() -> {
@@ -62,10 +62,10 @@ public class PatientPersistenceAdaptor implements PatientPersistencePort {
     }
 
     @Override
-    public Patient findDetailedById(ID id) {
-        return patientRepository.findDetailById(id.getId()).
+    public Patient findDetailedById(Id id) {
+        return patientRepository.findDetailById(id.value()).
                 map(PatientEntity::toDomain)
-                .orElseThrow(() -> new DomainNotFoundException(MessageFormat.format("patient with id '{'{0}'}' notfound", id.getId())));
+                .orElseThrow(() -> new DomainNotFoundException(MessageFormat.format("patient with id '{'{0}'}' notfound", id.value())));
     }
 
     @Override

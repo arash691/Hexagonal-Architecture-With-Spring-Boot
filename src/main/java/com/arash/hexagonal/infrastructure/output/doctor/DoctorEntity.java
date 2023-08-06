@@ -29,7 +29,7 @@ public class DoctorEntity extends BaseEntity {
 
     public static DoctorEntity from(Doctor doctor) {
         DoctorEntity doctorEntity = new DoctorEntity();
-        doctorEntity.setId(doctor.getId() != null ? doctor.getId().getId() : null);
+        doctorEntity.setId(doctor.getId() != null ? doctor.getId().value() : null);
         doctorEntity.setFullName(doctor.getFullName().value());
         doctorEntity.setMedicalNo(doctor.getMedicalNumber().value());
         Set<AppointmentEntity> appointmentEntities = new HashSet<>();
@@ -39,7 +39,7 @@ public class DoctorEntity extends BaseEntity {
             }
             doctorEntity.setAppointments(appointmentEntities);
         }
-        doctorEntity.setId(doctor.getId().getId());
+        doctorEntity.setId(doctor.getId().value());
         return doctorEntity;
     }
 

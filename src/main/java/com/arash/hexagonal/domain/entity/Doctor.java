@@ -11,22 +11,22 @@ import java.util.Objects;
  * @author a.ariani
  */
 public class Doctor {
-    private ID id;
+    private Id id;
     private MedicalNumber medicalNumber;
     private FullName fullName;
     private List<Appointment> appointments;
 
-    private Doctor(ID id) {
+    private Doctor(Id id) {
         this.id = id;
     }
 
-    private Doctor(ID id, MedicalNumber medicalNumber, FullName fullName) {
+    private Doctor(Id id, MedicalNumber medicalNumber, FullName fullName) {
         this.id = id;
         setMedicalNo(medicalNumber);
         setFullName(fullName);
     }
 
-    private Doctor(ID id, MedicalNumber medicalNumber, FullName fullName, List<Appointment> appointments) {
+    private Doctor(Id id, MedicalNumber medicalNumber, FullName fullName, List<Appointment> appointments) {
         this.id = id;
         setMedicalNo(medicalNumber);
         setFullName(fullName);
@@ -34,22 +34,22 @@ public class Doctor {
     }
 
     public static Doctor of(Long id, Long medicalNo, String fullName) {
-        return new Doctor(ID.of(id), new MedicalNumber(medicalNo), new FullName(fullName));
+        return new Doctor(new Id(id), new MedicalNumber(medicalNo), new FullName(fullName));
     }
 
     public static Doctor of(Long id, Long medicalNo, String fullName, List<Appointment> appointments) {
-        return new Doctor(ID.of(id), new MedicalNumber(medicalNo), new FullName(fullName), appointments);
+        return new Doctor(new Id(id), new MedicalNumber(medicalNo), new FullName(fullName), appointments);
     }
 
     public static Doctor of(Long doctorId) {
-        return new Doctor(ID.of(doctorId));
+        return new Doctor(new Id(doctorId));
     }
 
-    public ID getId() {
+    public Id getId() {
         return id;
     }
 
-    public void setId(ID id) {
+    public void setId(Id id) {
         this.id = id;
     }
 

@@ -5,7 +5,7 @@ import com.arash.hexagonal.domain.entity.Doctor;
 import com.arash.hexagonal.domain.exception.DomainNotFoundException;
 import com.arash.hexagonal.domain.exception.RemoveDomainException;
 import com.arash.hexagonal.domain.vo.Appointment;
-import com.arash.hexagonal.domain.vo.ID;
+import com.arash.hexagonal.domain.vo.Id;
 import com.arash.hexagonal.domain.vo.OpenTime;
 import com.arash.hexagonal.domain.vo.VisitDate;
 import com.arash.hexagonal.infrastructure.output.AppointmentRepository;
@@ -45,32 +45,32 @@ public class DoctorPersistenceAdaptor implements DoctorPersistencePort {
 
 
     @Override
-    public Doctor findDetailedById(ID id) {
-        return this.doctorRepository.findDetailById(id.getId())
+    public Doctor findDetailedById(Id id) {
+        return this.doctorRepository.findDetailById(id.value())
                 .map(DoctorEntity::toDomain)
                 .orElseThrow(() -> {
-                    throw new DomainNotFoundException(MessageFormat.format("doctor with id '{'{0}'}' notfound", id.getId()));
+                    throw new DomainNotFoundException(MessageFormat.format("doctor with id '{'{0}'}' notfound", id.value()));
                 });
     }
 
     @Override
-    public Doctor findRootById(ID id) {
-        return this.doctorRepository.findRootById(id.getId())
+    public Doctor findRootById(Id id) {
+        return this.doctorRepository.findRootById(id.value())
                 .map(DoctorRepository.DoctorEntityRoot::toDomain)
                 .orElseThrow(() -> {
-                    throw new DomainNotFoundException(MessageFormat.format("doctor with id '{'{0}'}' notfound", id.getId()));
+                    throw new DomainNotFoundException(MessageFormat.format("doctor with id '{'{0}'}' notfound", id.value()));
                 });
     }
 
     @Override
-    public List<Appointment> findAllAppointments(ID id) {
-        return this.doctorRepository.findDoctorAppointmentById(id.getId()).stream()
+    public List<Appointment> findAllAppointments(Id id) {
+        return this.doctorRepository.findDoctorAppointmentById(id.value()).stream()
                 .map(DoctorRepository.DoctorAppointment::toDomain)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<Appointment> findAllTakenTimes(ID id) {
+    public List<Appointment> findAllTakenTimes(Id id) {
         return List.of();
     }
 
@@ -81,8 +81,8 @@ public class DoctorPersistenceAdaptor implements DoctorPersistencePort {
 
     @Transactional
     @Override
-    public void removeOpenTimes(ID id, OpenTime openTime) {
-        this.appointmentRepository.findById(new AppointmentPK(id.getId(), openTime.visitDate().value()
+    public void removeOpenTimes(Id id, OpenTime openTime) {
+        this.appointmentRepository.findById(new AppointmentPK(id.value(), openTime.visitDate().value()
                         , openTime.timeDuration().begin()
                         , openTime.timeDuration().end()))
                 .ifPresentOrElse(appointmentEntity -> {

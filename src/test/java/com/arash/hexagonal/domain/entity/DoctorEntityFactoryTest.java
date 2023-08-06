@@ -4,7 +4,7 @@ import com.arash.hexagonal.domain.exception.EmptyFullNameException;
 import com.arash.hexagonal.domain.exception.InvalidStartAndEndTimeException;
 import com.arash.hexagonal.domain.exception.NullMedicalNumberException;
 import com.arash.hexagonal.domain.vo.FullName;
-import com.arash.hexagonal.domain.vo.ID;
+import com.arash.hexagonal.domain.vo.Id;
 import com.arash.hexagonal.domain.vo.MedicalNumber;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,7 +23,7 @@ public class DoctorEntityFactoryTest extends EntityFactoryTest {
     @DisplayName("givenSimpleId_WhenCreateDoctorEntity_ThenDoctorEntityIdIsEqualsWithSimpleId")
     public void givenSimpleId_WhenCreateDoctorEntity_ThenDoctorEntityIdIsEqualsWithSimpleId() {
         Doctor doctorWithSimpleId = Doctor.of(id);
-        assertEquals(doctorWithSimpleId.getId(), ID.of(id));
+        assertEquals(doctorWithSimpleId.getId(), Id.of(id));
     }
 
     @Test

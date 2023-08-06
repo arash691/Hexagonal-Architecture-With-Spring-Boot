@@ -3,7 +3,7 @@ package com.arash.hexagonal.application.ports.input;
 import com.arash.hexagonal.application.ports.output.DoctorPersistencePort;
 import com.arash.hexagonal.domain.entity.Doctor;
 import com.arash.hexagonal.domain.vo.Appointment;
-import com.arash.hexagonal.domain.vo.ID;
+import com.arash.hexagonal.domain.vo.Id;
 import com.arash.hexagonal.domain.vo.OpenTime;
 
 import java.util.List;
@@ -27,19 +27,19 @@ public class DoctorServicePortAdaptor implements DoctorServicePort {
 
 
     @Override
-    public Doctor createOpenTime(ID id, OpenTime openTime) {
+    public Doctor createOpenTime(Id id, OpenTime openTime) {
         Doctor doctor = this.doctorPersistencePort.findDetailedById(id);
         doctor.addOpenTime(openTime);
         return doctorPersistencePort.createOrUpdate(doctor);
     }
 
     @Override
-    public List<Appointment> findAllDoctorOpenAndTakenTimes(ID id) {
+    public List<Appointment> findAllDoctorOpenAndTakenTimes(Id id) {
         return this.doctorPersistencePort.findAllAppointments(id);
     }
 
     @Override
-    public void removeOpenTime(ID id, OpenTime openTimes) {
+    public void removeOpenTime(Id id, OpenTime openTimes) {
         this.doctorPersistencePort.removeOpenTimes(id, openTimes);
     }
 }
