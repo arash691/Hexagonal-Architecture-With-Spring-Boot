@@ -12,7 +12,7 @@ import java.time.temporal.ChronoUnit;
  */
 public record TimeDuration(LocalTime begin, LocalTime end) {
     private static final short MINIMUM_MIN_DURATION = 30;
-    private static final short MAXIMUM_MIN_DURATION = 60;
+    private static final short MAXIMUM_MIN_DURATION = 120;
 
     public TimeDuration {
         if (end.isBefore(begin))
