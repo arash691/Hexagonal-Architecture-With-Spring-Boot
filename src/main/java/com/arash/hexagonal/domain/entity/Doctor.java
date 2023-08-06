@@ -1,7 +1,5 @@
 package com.arash.hexagonal.domain.entity;
 
-import com.arash.hexagonal.domain.predicates.IsNotLessThan30MinDuration;
-import com.arash.hexagonal.domain.predicates.IsNotNullOrEmptyFullName;
 import com.arash.hexagonal.domain.predicates.IsNullMedicalNo;
 import com.arash.hexagonal.domain.predicates.IsValidStartAndEndTime;
 import com.arash.hexagonal.domain.vo.*;
@@ -39,11 +37,11 @@ public class Doctor {
     }
 
     public static Doctor of(Long id, Long medicalNo, String fullName) {
-        return new Doctor(ID.of(id), MedicalNo.of(medicalNo), FullName.of(fullName));
+        return new Doctor(ID.of(id), MedicalNo.of(medicalNo), new FullName(fullName));
     }
 
     public static Doctor of(Long id, Long medicalNo, String fullName, List<Appointment> appointments) {
-        return new Doctor(ID.of(id), MedicalNo.of(medicalNo), FullName.of(fullName), appointments);
+        return new Doctor(ID.of(id), MedicalNo.of(medicalNo), new FullName(fullName), appointments);
     }
 
     public static Doctor of(Long doctorId) {
@@ -72,7 +70,6 @@ public class Doctor {
     }
 
     public void setFullName(FullName fullName) {
-        new IsNotNullOrEmptyFullName().check(fullName);
         this.fullName = fullName;
     }
 

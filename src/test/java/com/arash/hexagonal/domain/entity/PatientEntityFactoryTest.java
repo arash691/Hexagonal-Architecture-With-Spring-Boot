@@ -28,7 +28,7 @@ public class PatientEntityFactoryTest extends EntityFactoryTest {
     public void givenFullNameAndPhoneNumber_WhenCreatePatientEntity_ThenPatientEntityPropertiesValuesAreExpected() {
         Patient patient = Patient.of(fullName, phoneNumber);
         assertEquals(patient.getPhoneNumber().value(), new PhoneNumber(phoneNumber).value());
-        assertEquals(patient.getFullName().getFullName(), FullName.of(fullName).getFullName());
+        assertEquals(patient.getFullName().value(), new FullName(fullName).value());
     }
 
     @Test

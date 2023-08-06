@@ -1,21 +1,15 @@
 package com.arash.hexagonal.domain.vo;
 
+import com.arash.hexagonal.domain.exception.EmptyFullNameException;
+
 /**
- * @author a.ariani
+ * @author iman hosseinzadeh
  */
-public class FullName {
-    private final String fullName;
-
-
-    private FullName(String fullName) {
-        this.fullName = fullName;
+public record FullName(String value) {
+    public FullName {
+        if (value == null || value.isEmpty() || value.isBlank()) {
+            throw new EmptyFullNameException();
+        }
     }
 
-    public static FullName of(String fullName) {
-        return new FullName(fullName);
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
 }

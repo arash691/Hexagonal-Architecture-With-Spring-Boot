@@ -1,7 +1,5 @@
 package com.arash.hexagonal.domain.entity;
 
-import com.arash.hexagonal.domain.predicates.IsNotNullOrEmptyFullName;
-import com.arash.hexagonal.domain.predicates.IsNotNullOrEmptyPhoneNumber;
 import com.arash.hexagonal.domain.vo.Appointment;
 import com.arash.hexagonal.domain.vo.FullName;
 import com.arash.hexagonal.domain.vo.ID;
@@ -37,15 +35,15 @@ public class Patient {
     }
 
     public static Patient of(String fullName, String phoneNumber) {
-        return new Patient(null, FullName.of(fullName), new PhoneNumber(phoneNumber));
+        return new Patient(null, new FullName(fullName), new PhoneNumber(phoneNumber));
     }
 
     public static Patient of(Long id, String fullName, String phoneNumber) {
-        return new Patient(ID.of(id), FullName.of(fullName), new PhoneNumber(phoneNumber));
+        return new Patient(ID.of(id), new FullName(fullName), new PhoneNumber(phoneNumber));
     }
 
     public static Patient of(Long id, String fullName, String phoneNumber, List<Appointment> appointments) {
-        return new Patient(ID.of(id), FullName.of(fullName), new PhoneNumber(phoneNumber), appointments);
+        return new Patient(ID.of(id), new FullName(fullName), new PhoneNumber(phoneNumber), appointments);
     }
 
     public static Patient of(Long patientId) {
@@ -65,7 +63,6 @@ public class Patient {
     }
 
     public void setFullName(FullName fullName) {
-        new IsNotNullOrEmptyFullName().check(fullName);
         this.fullName = fullName;
     }
 

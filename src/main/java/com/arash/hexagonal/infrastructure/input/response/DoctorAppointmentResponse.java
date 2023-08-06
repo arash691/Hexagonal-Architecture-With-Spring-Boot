@@ -27,7 +27,7 @@ public class DoctorAppointmentResponse {
             doctorAppointmentResponse.setStartTime(appointment.getOpenTime().getTimeDuration().getStart());
             doctorAppointmentResponse.setEndTime(appointment.getOpenTime().getTimeDuration().getEnd());
             doctorAppointmentResponse.setFullName(appointment.getPatient() != null && appointment.getPatient().getFullName() != null
-                    ? appointment.getPatient().getFullName().getFullName() : null);
+                    ? appointment.getPatient().getFullName().value() : null);
             doctorAppointmentResponse.setPhoneNumber(appointment.getPatient() != null && appointment.getPatient().getPhoneNumber() != null ?
                     appointment.getPatient().getPhoneNumber().value() : null);
             doctorAppointmentResponses.add(doctorAppointmentResponse);
