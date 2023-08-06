@@ -15,7 +15,7 @@
     <description>A sample project illustrates how to use the Hexagonal Architecture in Java and Spring Boot.
     </description>
     <properties>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
         <cucumber.version>7.0.0</cucumber.version>
         <junit-jupiter.version>5.8.1</junit-jupiter.version>
     </properties>
