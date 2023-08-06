@@ -1,20 +1,14 @@
 package com.arash.hexagonal.domain.vo;
 
+import com.arash.hexagonal.domain.exception.EmptyPhoneNumberException;
+
 /**
- * @author a.ariani
+ * @author iman hosseinzadeh
  */
-public class PhoneNumber {
-    private final String phoneNumber;
-
-    private PhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public static PhoneNumber of(String phoneNumber) {
-        return new PhoneNumber(phoneNumber);
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
+public record PhoneNumber(String value) {
+    public PhoneNumber {
+        if (value == null || value.isEmpty() || value.isBlank()) {
+            throw new EmptyPhoneNumberException();
+        }
     }
 }

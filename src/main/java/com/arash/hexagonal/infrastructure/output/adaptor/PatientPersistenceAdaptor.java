@@ -65,14 +65,12 @@ public class PatientPersistenceAdaptor implements PatientPersistencePort {
     public Patient findDetailedById(ID id) {
         return patientRepository.findDetailById(id.getId()).
                 map(PatientEntity::toDomain)
-                .orElseThrow(() -> {
-                    throw new DomainNotFoundException(MessageFormat.format("patient with id '{'{0}'}' notfound", id.getId()));
-                });
+                .orElseThrow(() -> new DomainNotFoundException(MessageFormat.format("patient with id '{'{0}'}' notfound", id.getId())));
     }
 
     @Override
     public List<Appointment> findAppointments(PhoneNumber phoneNumber) {
-        return patientRepository.findAppointmentByPhoneNumber(phoneNumber.getPhoneNumber())
+        return patientRepository.findAppointmentByPhoneNumber(phoneNumber.value())
                 .stream()
                 .map(PatientRepository.PatientAppointment::toDomain)
                 .collect(Collectors.toList());

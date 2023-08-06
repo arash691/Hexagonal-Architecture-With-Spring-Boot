@@ -29,7 +29,7 @@ public class DoctorAppointmentResponse {
             doctorAppointmentResponse.setFullName(appointment.getPatient() != null && appointment.getPatient().getFullName() != null
                     ? appointment.getPatient().getFullName().getFullName() : null);
             doctorAppointmentResponse.setPhoneNumber(appointment.getPatient() != null && appointment.getPatient().getPhoneNumber() != null ?
-                    appointment.getPatient().getPhoneNumber().getPhoneNumber() : null);
+                    appointment.getPatient().getPhoneNumber().value() : null);
             doctorAppointmentResponses.add(doctorAppointmentResponse);
         }
         return doctorAppointmentResponses;

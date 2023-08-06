@@ -37,15 +37,15 @@ public class Patient {
     }
 
     public static Patient of(String fullName, String phoneNumber) {
-        return new Patient(null, FullName.of(fullName), PhoneNumber.of(phoneNumber));
+        return new Patient(null, FullName.of(fullName), new PhoneNumber(phoneNumber));
     }
 
     public static Patient of(Long id, String fullName, String phoneNumber) {
-        return new Patient(ID.of(id), FullName.of(fullName), PhoneNumber.of(phoneNumber));
+        return new Patient(ID.of(id), FullName.of(fullName), new PhoneNumber(phoneNumber));
     }
 
     public static Patient of(Long id, String fullName, String phoneNumber, List<Appointment> appointments) {
-        return new Patient(ID.of(id), FullName.of(fullName), PhoneNumber.of(phoneNumber), appointments);
+        return new Patient(ID.of(id), FullName.of(fullName), new PhoneNumber(phoneNumber), appointments);
     }
 
     public static Patient of(Long patientId) {
@@ -74,7 +74,6 @@ public class Patient {
     }
 
     public void setPhoneNumber(PhoneNumber phoneNumber) {
-        new IsNotNullOrEmptyPhoneNumber().check(phoneNumber);
         this.phoneNumber = phoneNumber;
     }
 

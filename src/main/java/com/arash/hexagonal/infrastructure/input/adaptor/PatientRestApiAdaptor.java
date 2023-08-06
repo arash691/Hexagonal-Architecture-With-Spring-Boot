@@ -55,7 +55,7 @@ public class PatientRestApiAdaptor {
 
     @GetMapping(path = "/appointments")
     public ResponseEntity<?> findAllAppointments(@RequestParam(name = "phone-number") String phoneNumber) {
-        return ResponseFactory.ok(patientServicePort.findAllAppointmentsByPhoneNumber(PhoneNumber.of(phoneNumber)),
+        return ResponseFactory.ok(patientServicePort.findAllAppointmentsByPhoneNumber(new PhoneNumber(phoneNumber)),
                 PatientAppointmentResponse::from);
     }
 }
