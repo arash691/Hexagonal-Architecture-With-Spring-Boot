@@ -3,7 +3,7 @@ package com.arash.hexagonal.infrastructure.input.adaptor;
 import com.arash.hexagonal.application.ports.input.DoctorServicePort;
 import com.arash.hexagonal.domain.entity.Doctor;
 import com.arash.hexagonal.domain.exception.InvalidStartAndEndTimeException;
-import com.arash.hexagonal.domain.exception.NullMedicalNoException;
+import com.arash.hexagonal.domain.exception.NullMedicalNumberException;
 import com.arash.hexagonal.domain.vo.ID;
 import com.arash.hexagonal.domain.vo.OpenTime;
 import com.arash.hexagonal.domain.vo.TimeDuration;
@@ -44,7 +44,7 @@ public class DoctorRestApiAdaptor {
         try {
             Doctor openTime = doctorServicePort.createOpenTime(ID.of(id), new OpenTime(new VisitDate(createOpenTimeRequest.getVisitDate()), new TimeDuration(createOpenTimeRequest.getStartTime(), createOpenTimeRequest.getEndTime())));
             return ResponseFactory.ok(openTime, DoctorResponse::from);
-        } catch (InvalidStartAndEndTimeException | NullMedicalNoException e) {
+        } catch (InvalidStartAndEndTimeException | NullMedicalNumberException e) {
             return ResponseFactory.badRequest(e.getMessage());
         }
     }

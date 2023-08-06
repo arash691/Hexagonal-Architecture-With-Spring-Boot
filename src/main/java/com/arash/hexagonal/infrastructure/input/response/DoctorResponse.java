@@ -20,7 +20,7 @@ public class DoctorResponse {
 
     public static DoctorResponse from(Doctor doctor) {
         DoctorResponse doctorResponse = new DoctorResponse();
-        doctorResponse.setMedicalNo(doctor.getMedicalNo().getMedicalNo());
+        doctorResponse.setMedicalNo(doctor.getMedicalNumber().value());
         doctorResponse.setFullName(doctor.getFullName().value());
         List<AppointmentResponse> appointmentResponses = new ArrayList<>();
         for (Appointment appointment : doctor.getAppointments()) {

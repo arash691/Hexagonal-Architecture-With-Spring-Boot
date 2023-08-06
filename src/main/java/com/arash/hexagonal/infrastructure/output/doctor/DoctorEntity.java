@@ -31,7 +31,7 @@ public class DoctorEntity extends BaseEntity {
         DoctorEntity doctorEntity = new DoctorEntity();
         doctorEntity.setId(doctor.getId() != null ? doctor.getId().getId() : null);
         doctorEntity.setFullName(doctor.getFullName().value());
-        doctorEntity.setMedicalNo(doctor.getMedicalNo().getMedicalNo());
+        doctorEntity.setMedicalNo(doctor.getMedicalNumber().value());
         Set<AppointmentEntity> appointmentEntities = new HashSet<>();
         if (doctor.getAppointments() != null && !doctor.getAppointments().isEmpty()) {
             for (Appointment appointment : doctor.getAppointments()) {

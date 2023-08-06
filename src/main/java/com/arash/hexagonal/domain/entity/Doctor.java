@@ -1,6 +1,5 @@
 package com.arash.hexagonal.domain.entity;
 
-import com.arash.hexagonal.domain.predicates.IsNullMedicalNo;
 import com.arash.hexagonal.domain.vo.*;
 
 import java.time.LocalDate;
@@ -13,7 +12,7 @@ import java.util.Objects;
  */
 public class Doctor {
     private ID id;
-    private MedicalNo medicalNo;
+    private MedicalNumber medicalNumber;
     private FullName fullName;
     private List<Appointment> appointments;
 
@@ -21,25 +20,25 @@ public class Doctor {
         this.id = id;
     }
 
-    private Doctor(ID id, MedicalNo medicalNo, FullName fullName) {
+    private Doctor(ID id, MedicalNumber medicalNumber, FullName fullName) {
         this.id = id;
-        setMedicalNo(medicalNo);
+        setMedicalNo(medicalNumber);
         setFullName(fullName);
     }
 
-    private Doctor(ID id, MedicalNo medicalNo, FullName fullName, List<Appointment> appointments) {
+    private Doctor(ID id, MedicalNumber medicalNumber, FullName fullName, List<Appointment> appointments) {
         this.id = id;
-        setMedicalNo(medicalNo);
+        setMedicalNo(medicalNumber);
         setFullName(fullName);
         this.appointments = appointments;
     }
 
     public static Doctor of(Long id, Long medicalNo, String fullName) {
-        return new Doctor(ID.of(id), MedicalNo.of(medicalNo), new FullName(fullName));
+        return new Doctor(ID.of(id), new MedicalNumber(medicalNo), new FullName(fullName));
     }
 
     public static Doctor of(Long id, Long medicalNo, String fullName, List<Appointment> appointments) {
-        return new Doctor(ID.of(id), MedicalNo.of(medicalNo), new FullName(fullName), appointments);
+        return new Doctor(ID.of(id), new MedicalNumber(medicalNo), new FullName(fullName), appointments);
     }
 
     public static Doctor of(Long doctorId) {
@@ -54,13 +53,12 @@ public class Doctor {
         this.id = id;
     }
 
-    public MedicalNo getMedicalNo() {
-        return medicalNo;
+    public MedicalNumber getMedicalNumber() {
+        return medicalNumber;
     }
 
-    public void setMedicalNo(MedicalNo medicalNo) {
-        new IsNullMedicalNo().check(medicalNo);
-        this.medicalNo = medicalNo;
+    public void setMedicalNo(MedicalNumber medicalNumber) {
+        this.medicalNumber = medicalNumber;
     }
 
     public FullName getFullName() {
@@ -96,19 +94,19 @@ public class Doctor {
         if (o == null || getClass() != o.getClass()) return false;
         Doctor doctor = (Doctor) o;
         return id.equals(doctor.id) &&
-                medicalNo.equals(doctor.medicalNo);
+                medicalNumber.equals(doctor.medicalNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, medicalNo);
+        return Objects.hash(id, medicalNumber);
     }
 
     @Override
     public String toString() {
         return "Doctor{" +
                 "id=" + id +
-                ", medicalNo=" + medicalNo +
+                ", medicalNo=" + medicalNumber +
                 ", fullName=" + fullName +
                 '}';
     }

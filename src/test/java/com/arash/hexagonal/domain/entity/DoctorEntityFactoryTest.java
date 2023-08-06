@@ -2,10 +2,10 @@ package com.arash.hexagonal.domain.entity;
 
 import com.arash.hexagonal.domain.exception.EmptyFullNameException;
 import com.arash.hexagonal.domain.exception.InvalidStartAndEndTimeException;
-import com.arash.hexagonal.domain.exception.NullMedicalNoException;
+import com.arash.hexagonal.domain.exception.NullMedicalNumberException;
 import com.arash.hexagonal.domain.vo.FullName;
 import com.arash.hexagonal.domain.vo.ID;
-import com.arash.hexagonal.domain.vo.MedicalNo;
+import com.arash.hexagonal.domain.vo.MedicalNumber;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -30,14 +30,14 @@ public class DoctorEntityFactoryTest extends EntityFactoryTest {
     @DisplayName("givenMedicalNoAndFullName_WhenCreateDoctorEntity_ThenDoctorEntityPropertiesValuesAreExpected")
     public void givenMedicalNoAndFullName_WhenCreateDoctorEntity_ThenDoctorEntityPropertiesValuesAreExpected() {
         Doctor doctorWithMedicalNoAndFullName = Doctor.of(id, medicalNo, fullName);
-        assertEquals(doctorWithMedicalNoAndFullName.getMedicalNo().getMedicalNo(), MedicalNo.of(medicalNo).getMedicalNo());
+        assertEquals(doctorWithMedicalNoAndFullName.getMedicalNumber().value(), new MedicalNumber(medicalNo).value());
         assertEquals(doctorWithMedicalNoAndFullName.getFullName().value(), new FullName(fullName).value());
     }
 
     @Test
     @DisplayName("givenNullMedicalNo_WhenCreateDoctorEntity_ThenDoctorEntityWillThrowsNullMedicalNoException")
     public void givenNullMedicalNo_WhenCreateDoctorEntity_ThenDoctorEntityWillThrowsNullMedicalNoException() {
-        assertThrowsExactly(NullMedicalNoException.class, () -> Doctor.of(id, null, fullName));
+        assertThrowsExactly(NullMedicalNumberException.class, () -> Doctor.of(id, null, fullName));
     }
 
     @Test
