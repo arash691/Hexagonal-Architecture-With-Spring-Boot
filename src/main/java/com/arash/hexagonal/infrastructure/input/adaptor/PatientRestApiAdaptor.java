@@ -2,10 +2,10 @@ package com.arash.hexagonal.infrastructure.input.adaptor;
 
 import com.arash.hexagonal.application.ports.input.PatientServicePort;
 import com.arash.hexagonal.domain.entity.Doctor;
-import com.arash.hexagonal.domain.vo.OpenTime;
 import com.arash.hexagonal.domain.entity.Patient;
 import com.arash.hexagonal.domain.exception.EmptyFullNameException;
 import com.arash.hexagonal.domain.exception.EmptyPhoneNumberException;
+import com.arash.hexagonal.domain.vo.OpenTime;
 import com.arash.hexagonal.domain.vo.PhoneNumber;
 import com.arash.hexagonal.domain.vo.VisitDate;
 import com.arash.hexagonal.infrastructure.input.request.PatientTakeAppointmentRequest;
@@ -43,10 +43,10 @@ public class PatientRestApiAdaptor {
     public ResponseEntity<?> takeAppointment(@RequestBody PatientTakeAppointmentRequest patientTakeAppointmentRequest) {
         try {
             return ResponseFactory.ok(patientServicePort.createAppointment(Doctor.of(patientTakeAppointmentRequest.getDoctorId()),
-                    Patient.of(patientTakeAppointmentRequest.getName(), patientTakeAppointmentRequest.getPhoneNumber()),
-                    OpenTime.of(patientTakeAppointmentRequest.getVisitDateInfo().getVisitDate(),
-                            patientTakeAppointmentRequest.getVisitDateInfo().getStartTime(),
-                            patientTakeAppointmentRequest.getVisitDateInfo().getEndTime())),
+                            Patient.of(patientTakeAppointmentRequest.getName(), patientTakeAppointmentRequest.getPhoneNumber()),
+                            OpenTime.of(patientTakeAppointmentRequest.getVisitDateInfo().getVisitDate(),
+                                    patientTakeAppointmentRequest.getVisitDateInfo().getStartTime(),
+                                    patientTakeAppointmentRequest.getVisitDateInfo().getEndTime())),
                     patient -> PatientAppointmentResponse.from(patient.getAppointments()));
         } catch (EmptyFullNameException | EmptyPhoneNumberException e) {
             return ResponseFactory.badRequest(e.getMessage());

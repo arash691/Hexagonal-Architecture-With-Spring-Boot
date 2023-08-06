@@ -1,9 +1,9 @@
 package com.arash.hexagonal.infrastructure.output.doctor;
 
-import com.arash.hexagonal.infrastructure.output.BaseEntity;
-import com.arash.hexagonal.infrastructure.output.appointment.AppointmentEntity;
 import com.arash.hexagonal.domain.entity.Doctor;
 import com.arash.hexagonal.domain.vo.Appointment;
+import com.arash.hexagonal.infrastructure.output.BaseEntity;
+import com.arash.hexagonal.infrastructure.output.appointment.AppointmentEntity;
 
 import javax.persistence.*;
 import java.util.HashSet;

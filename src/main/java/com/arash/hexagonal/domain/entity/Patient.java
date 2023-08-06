@@ -1,11 +1,11 @@
 package com.arash.hexagonal.domain.entity;
 
+import com.arash.hexagonal.domain.predicates.IsNotNullOrEmptyFullName;
 import com.arash.hexagonal.domain.predicates.IsNotNullOrEmptyPhoneNumber;
 import com.arash.hexagonal.domain.vo.Appointment;
+import com.arash.hexagonal.domain.vo.FullName;
 import com.arash.hexagonal.domain.vo.ID;
 import com.arash.hexagonal.domain.vo.PhoneNumber;
-import com.arash.hexagonal.domain.predicates.IsNotNullOrEmptyFullName;
-import com.arash.hexagonal.domain.vo.FullName;
 
 import java.util.List;
 import java.util.Objects;

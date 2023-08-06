@@ -1,8 +1,8 @@
 package com.arash.hexagonal.infrastructure.output.patient;
 
+import com.arash.hexagonal.domain.entity.Patient;
 import com.arash.hexagonal.infrastructure.output.BaseEntity;
 import com.arash.hexagonal.infrastructure.output.appointment.AppointmentEntity;
-import com.arash.hexagonal.domain.entity.Patient;
 
 import javax.persistence.*;
 import java.util.HashSet;

@@ -1,14 +1,14 @@
 package com.arash.hexagonal.infrastructure.output.adaptor;
 
 import com.arash.hexagonal.application.ports.output.PatientPersistencePort;
-import com.arash.hexagonal.domain.vo.*;
-import com.arash.hexagonal.infrastructure.output.appointment.AppointmentEntity;
 import com.arash.hexagonal.domain.entity.Doctor;
 import com.arash.hexagonal.domain.entity.Patient;
 import com.arash.hexagonal.domain.exception.DomainConflictException;
 import com.arash.hexagonal.domain.exception.DomainNotFoundException;
+import com.arash.hexagonal.domain.vo.*;
 import com.arash.hexagonal.infrastructure.output.AppointmentRepository;
 import com.arash.hexagonal.infrastructure.output.PatientRepository;
+import com.arash.hexagonal.infrastructure.output.appointment.AppointmentEntity;
 import com.arash.hexagonal.infrastructure.output.appointment.AppointmentPK;
 import com.arash.hexagonal.infrastructure.output.patient.PatientEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,8 +47,8 @@ public class PatientPersistenceAdaptor implements PatientPersistencePort {
     @Override
     public Patient createAppointment(Doctor doctor, Patient patient, OpenTime openTime) {
         AppointmentEntity appointmentEntity = this.appointmentRepository.findById(new AppointmentPK(doctor.getId().getId(), openTime.getVisitDate().getVisitDate(),
-                openTime.getTimeDuration().getStart(),
-                openTime.getTimeDuration().getEnd()))
+                        openTime.getTimeDuration().getStart(),
+                        openTime.getTimeDuration().getEnd()))
                 .orElseThrow(() -> {
                     throw new DomainNotFoundException("time not found");
                 });
