@@ -23,9 +23,9 @@ public class DoctorAppointmentResponse {
         List<DoctorAppointmentResponse> doctorAppointmentResponses = new ArrayList<>();
         for (Appointment appointment : appointments) {
             DoctorAppointmentResponse doctorAppointmentResponse = new DoctorAppointmentResponse();
-            doctorAppointmentResponse.setVisitDate(appointment.getOpenTime().getVisitDate().getVisitDate());
-            doctorAppointmentResponse.setStartTime(appointment.getOpenTime().getTimeDuration().getStart());
-            doctorAppointmentResponse.setEndTime(appointment.getOpenTime().getTimeDuration().getEnd());
+            doctorAppointmentResponse.setVisitDate(appointment.getOpenTime().visitDate().value());
+            doctorAppointmentResponse.setStartTime(appointment.getOpenTime().timeDuration().begin());
+            doctorAppointmentResponse.setEndTime(appointment.getOpenTime().timeDuration().end());
             doctorAppointmentResponse.setFullName(appointment.getPatient() != null && appointment.getPatient().getFullName() != null
                     ? appointment.getPatient().getFullName().value() : null);
             doctorAppointmentResponse.setPhoneNumber(appointment.getPatient() != null && appointment.getPatient().getPhoneNumber() != null ?

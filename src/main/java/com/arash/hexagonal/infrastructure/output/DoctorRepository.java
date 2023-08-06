@@ -4,6 +4,8 @@ import com.arash.hexagonal.domain.entity.Doctor;
 import com.arash.hexagonal.domain.entity.Patient;
 import com.arash.hexagonal.domain.vo.Appointment;
 import com.arash.hexagonal.domain.vo.OpenTime;
+import com.arash.hexagonal.domain.vo.TimeDuration;
+import com.arash.hexagonal.domain.vo.VisitDate;
 import com.arash.hexagonal.infrastructure.output.doctor.DoctorEntity;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -45,21 +47,20 @@ public interface DoctorRepository extends JpaRepository<DoctorEntity, Long> {
         Long getMedicalNo();
     }
 
-/*
-    interface DoctorOpenTime {
-        LocalDate getVisitDate();
+    /*
+        interface DoctorOpenTime {
+            LocalDate getVisitDate();
 
-        LocalTime getStartTime();
+            LocalTime getStartTime();
 
-        LocalTime getEndTime();
+            LocalTime getEndTime();
 
-        static OpenTime toDomain(DoctorOpenTime doctorOpenTime) {
-            return OpenTime.of(doctorOpenTime.getVisitDate(),
-                    doctorOpenTime.getStartTime(),
-                    doctorOpenTime.getEndTime());
+            static OpenTime toDomain(DoctorOpenTime doctorOpenTime) {
+                return new OpenTime(new VisitDate(doctorOpenTime.getVisitDate()),
+                        new TimeDuration(doctorOpenTime.getStartTime(), doctorOpenTime.getEndTime()));
+            }
         }
-    }
-*/
+    */
 
     interface DoctorAppointment {
         static Appointment toDomain(DoctorAppointment doctorAppointment) {
@@ -67,9 +68,8 @@ public interface DoctorRepository extends JpaRepository<DoctorEntity, Long> {
                     doctorAppointment.getPhoneNumber() != null &&
                             doctorAppointment.getName() != null ? Patient.of(null, doctorAppointment.getName()
                             , doctorAppointment.getPhoneNumber()) : null,
-                    OpenTime.of(doctorAppointment.getVisitDate(),
-                            doctorAppointment.getStartTime(),
-                            doctorAppointment.getEndTime()), doctorAppointment.getVersion());
+                    new OpenTime(new VisitDate(doctorAppointment.getVisitDate()), new TimeDuration(doctorAppointment.getStartTime(), doctorAppointment.getEndTime())),
+                    doctorAppointment.getVersion());
         }
 
         LocalDate getVisitDate();

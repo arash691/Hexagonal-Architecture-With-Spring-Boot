@@ -1,51 +1,29 @@
 package com.arash.hexagonal.domain.vo;
 
+import com.arash.hexagonal.domain.exception.InvalidStartAndEndTimeException;
+import com.arash.hexagonal.domain.exception.LessThanAllowedDurationException;
+import com.arash.hexagonal.domain.exception.MoreThanAllowedDurationException;
+
 import java.time.LocalTime;
-import java.util.Objects;
+import java.time.temporal.ChronoUnit;
 
 /**
- * @author a.ariani
+ * @author iman hosseinzaeh
  */
-public class TimeDuration {
-    private final LocalTime start;
-    private final LocalTime end;
+public record TimeDuration(LocalTime begin, LocalTime end) {
+    private static final short MINIMUM_MIN_DURATION = 30;
+    private static final short MAXIMUM_MIN_DURATION = 60;
 
-    public TimeDuration(LocalTime start, LocalTime end) {
-        this.start = start;
-        this.end = end;
+    public TimeDuration {
+        if (end.isBefore(begin))
+            throw new InvalidStartAndEndTimeException();
+
+        long duration = begin.until(end, ChronoUnit.MINUTES);
+        if (duration < MINIMUM_MIN_DURATION)
+            throw new LessThanAllowedDurationException(duration);
+
+        if (duration > MAXIMUM_MIN_DURATION)
+            throw new MoreThanAllowedDurationException(duration);
     }
 
-    public static TimeDuration of(LocalTime start, LocalTime end) {
-        return new TimeDuration(start, end);
-    }
-
-    public LocalTime getStart() {
-        return start;
-    }
-
-    public LocalTime getEnd() {
-        return end;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TimeDuration that = (TimeDuration) o;
-        return start.equals(that.start) &&
-                end.equals(that.end);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(start, end);
-    }
-
-    @Override
-    public String toString() {
-        return "TimeDuration{" +
-                "start=" + start +
-                ", end=" + end +
-                '}';
-    }
 }

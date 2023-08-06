@@ -2,6 +2,7 @@ package com.arash.hexagonal.infrastructure.input.request;
 
 import com.arash.hexagonal.domain.vo.OpenTime;
 import com.arash.hexagonal.domain.vo.TimeDuration;
+import com.arash.hexagonal.domain.vo.VisitDate;
 
 import java.time.LocalDate;
 
@@ -30,6 +31,6 @@ public class RemoveOpenTimeRequest {
     }
 
     public OpenTime toDomain() {
-        return OpenTime.of(visitDate, timeDurations.getStart(), timeDurations.getEnd());
+        return new OpenTime(new VisitDate(visitDate), new TimeDuration(timeDurations.begin(), timeDurations.end()));
     }
 }

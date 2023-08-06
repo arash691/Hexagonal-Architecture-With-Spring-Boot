@@ -6,6 +6,8 @@ import com.arash.hexagonal.domain.exception.InvalidStartAndEndTimeException;
 import com.arash.hexagonal.domain.exception.NullMedicalNoException;
 import com.arash.hexagonal.domain.vo.ID;
 import com.arash.hexagonal.domain.vo.OpenTime;
+import com.arash.hexagonal.domain.vo.TimeDuration;
+import com.arash.hexagonal.domain.vo.VisitDate;
 import com.arash.hexagonal.infrastructure.input.request.CreateDoctorRequest;
 import com.arash.hexagonal.infrastructure.input.request.CreateOpenTimeRequest;
 import com.arash.hexagonal.infrastructure.input.request.RemoveOpenTimeRequest;
@@ -40,7 +42,7 @@ public class DoctorRestApiAdaptor {
     @PostMapping(path = "/{id}/open-times")
     public ResponseEntity<?> addOpenTimes(@PathVariable(name = "id") Long id, @Validated @RequestBody CreateOpenTimeRequest createOpenTimeRequest) {
         try {
-            Doctor openTime = doctorServicePort.createOpenTime(ID.of(id), OpenTime.of(createOpenTimeRequest.getVisitDate(), createOpenTimeRequest.getStartTime(), createOpenTimeRequest.getEndTime()));
+            Doctor openTime = doctorServicePort.createOpenTime(ID.of(id), new OpenTime(new VisitDate(createOpenTimeRequest.getVisitDate()), new TimeDuration(createOpenTimeRequest.getStartTime(), createOpenTimeRequest.getEndTime())));
             return ResponseFactory.ok(openTime, DoctorResponse::from);
         } catch (InvalidStartAndEndTimeException | NullMedicalNoException e) {
             return ResponseFactory.badRequest(e.getMessage());

@@ -4,6 +4,8 @@ import com.arash.hexagonal.domain.entity.Doctor;
 import com.arash.hexagonal.domain.entity.Patient;
 import com.arash.hexagonal.domain.vo.Appointment;
 import com.arash.hexagonal.domain.vo.OpenTime;
+import com.arash.hexagonal.domain.vo.TimeDuration;
+import com.arash.hexagonal.domain.vo.VisitDate;
 import com.arash.hexagonal.infrastructure.output.patient.PatientEntity;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -31,9 +33,8 @@ public interface PatientRepository extends JpaRepository<PatientEntity, Long> {
         static Appointment toDomain(PatientAppointment patientAppointment) {
             return Appointment.of(Doctor.of(patientAppointment.getDoctorId()),
                     Patient.of(patientAppointment.getPatientId()),
-                    OpenTime.of(patientAppointment.getVisitDate(),
-                            patientAppointment.getStartTime(),
-                            patientAppointment.getEndTime()), patientAppointment.getVersion());
+                    new OpenTime(new VisitDate(patientAppointment.getVisitDate()), new TimeDuration(patientAppointment.getStartTime(), patientAppointment.getEndTime())),
+                    patientAppointment.getVersion());
         }
 
         LocalDate getVisitDate();

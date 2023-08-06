@@ -1,6 +1,8 @@
 package com.arash.hexagonal.infrastructure.output;
 
 import com.arash.hexagonal.domain.vo.OpenTime;
+import com.arash.hexagonal.domain.vo.TimeDuration;
+import com.arash.hexagonal.domain.vo.VisitDate;
 import com.arash.hexagonal.infrastructure.output.appointment.AppointmentEntity;
 import com.arash.hexagonal.infrastructure.output.appointment.AppointmentPK;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -26,9 +28,8 @@ public interface AppointmentRepository extends JpaRepository<AppointmentEntity, 
 
     interface OpenAppointment {
         static OpenTime toDomain(OpenAppointment openAppointment) {
-            return OpenTime.of(openAppointment.getVisitDate(),
-                    openAppointment.getStartTime(),
-                    openAppointment.getEndTime());
+            return new OpenTime(new VisitDate(openAppointment.getVisitDate()),
+                    new TimeDuration(openAppointment.getStartTime(), openAppointment.getEndTime()));
         }
 
         LocalDate getVisitDate();

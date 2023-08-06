@@ -50,7 +50,7 @@ public class DoctorEntityFactoryTest extends EntityFactoryTest {
     @DisplayName("givenInValidOpenTimeWithDurationLessThan30Min_WhenCreateDoctorEntityAndAddOpenTime_ThenOpenTimeIsEmpty")
     public void givenInValidOpenTimeWithDurationLessThan30Min_WhenCreateDoctorEntityAndAddOpenTime_ThenOpenTimeIsEmpty() {
         Doctor doctor = Doctor.of(id, medicalNo, fullName);
-        doctor.addOpenTimes(invalidDuration);
+        doctor.addOpenTime(invalidDuration);
         assertNull(doctor.getAppointments());
     }
 
@@ -59,7 +59,7 @@ public class DoctorEntityFactoryTest extends EntityFactoryTest {
     public void givenInValidOpenTimeWithStartTimeLessThanEndTime_WhenCreateDoctorEntityAndAddOpenTime_ThenThrowsInvalidStartAndEndTimeException() {
         assertThrowsExactly(InvalidStartAndEndTimeException.class, () -> {
             Doctor doctor = Doctor.of(id, medicalNo, fullName);
-            doctor.addOpenTimes(invalidStartingPointTime);
+            doctor.addOpenTime(invalidStartingPointTime);
         });
     }
 
@@ -67,7 +67,7 @@ public class DoctorEntityFactoryTest extends EntityFactoryTest {
     @DisplayName("givenValidOpenThanEndTime_WhenCreateDoctorEntityAndAddOpenTime_ThenDurationIsChunkedInto30MinWhichExpected")
     public void givenValidOpenThanEndTime_WhenCreateDoctorEntityAndAddOpenTime_ThenDurationIsChunkedInto30MinWhichExpected() {
         Doctor doctor = Doctor.of(id, medicalNo, fullName, new ArrayList<>());
-        doctor.addOpenTimes(validOpenTime);
+        doctor.addOpenTime(validOpenTime);
         assertNotNull(doctor.getAppointments());
         assertEquals(doctor.getAppointments().size(), NumberOfExpectation);
     }

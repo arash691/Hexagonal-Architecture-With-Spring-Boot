@@ -2,6 +2,8 @@ package com.arash.hexagonal.infrastructure.output.appointment;
 
 import com.arash.hexagonal.domain.vo.Appointment;
 import com.arash.hexagonal.domain.vo.OpenTime;
+import com.arash.hexagonal.domain.vo.TimeDuration;
+import com.arash.hexagonal.domain.vo.VisitDate;
 import com.arash.hexagonal.infrastructure.output.doctor.DoctorEntity;
 import com.arash.hexagonal.infrastructure.output.patient.PatientEntity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -69,9 +71,9 @@ public class AppointmentEntity implements Serializable {
 
     public static AppointmentEntity from(DoctorEntity doctorEntity, PatientEntity patientEntity,
                                          OpenTime openTime, Integer version) {
-        return new AppointmentEntity(doctorEntity, patientEntity, openTime.getVisitDate().getVisitDate(),
-                openTime.getTimeDuration().getStart(),
-                openTime.getTimeDuration().getEnd(), version);
+        return new AppointmentEntity(doctorEntity, patientEntity, openTime.visitDate().value(),
+                openTime.timeDuration().begin(),
+                openTime.timeDuration().end(), version);
     }
 
     public AppointmentPK getId() {
@@ -129,7 +131,7 @@ public class AppointmentEntity implements Serializable {
 
     public Appointment toDomain() {
         return Appointment.of(doctor.getId(), patient != null ? patient.getId() : null,
-                OpenTime.of(id.getVisitDate(), id.getStartTime(), id.getEndTime()), version);
+                new OpenTime(new VisitDate(id.getVisitDate()), new TimeDuration(id.getStartTime(), id.getEndTime())), version);
     }
 
     @Override

@@ -20,7 +20,6 @@ import java.text.MessageFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 /**
  * @author a.ariani
  */
@@ -83,9 +82,9 @@ public class DoctorPersistenceAdaptor implements DoctorPersistencePort {
     @Transactional
     @Override
     public void removeOpenTimes(ID id, OpenTime openTime) {
-        this.appointmentRepository.findById(new AppointmentPK(id.getId(), openTime.getVisitDate().getVisitDate()
-                        , openTime.getTimeDuration().getStart()
-                        , openTime.getTimeDuration().getEnd()))
+        this.appointmentRepository.findById(new AppointmentPK(id.getId(), openTime.visitDate().value()
+                        , openTime.timeDuration().begin()
+                        , openTime.timeDuration().end()))
                 .ifPresentOrElse(appointmentEntity -> {
                             if (appointmentEntity.getPatient() == null) {
                                 this.appointmentRepository.deleteOpenTime(appointmentEntity.getId(), appointmentEntity.getVersion());

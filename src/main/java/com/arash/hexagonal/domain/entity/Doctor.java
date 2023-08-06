@@ -1,12 +1,10 @@
 package com.arash.hexagonal.domain.entity;
 
 import com.arash.hexagonal.domain.predicates.IsNullMedicalNo;
-import com.arash.hexagonal.domain.predicates.IsValidStartAndEndTime;
 import com.arash.hexagonal.domain.vo.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Objects;
 
@@ -73,19 +71,17 @@ public class Doctor {
         this.fullName = fullName;
     }
 
-    public void addOpenTimes(OpenTime openTime) {
-        new IsValidStartAndEndTime().check(openTime);
-        if (new IsNotLessThan30MinDuration().test(openTime)) {
-            LocalDate visitDate = openTime.getVisitDate().getVisitDate();
-            LocalTime start = openTime.getTimeDuration().getStart();
-            LocalTime end = openTime.getTimeDuration().getEnd();
-            while (start.isBefore(end)) {
-                LocalTime plus = LocalTime.of(start.getHour(),
-                        start.getMinute()).plus(30, ChronoUnit.MINUTES);
-                appointments.add(Appointment.of(this, null, OpenTime.of(visitDate, start,
-                        plus), 0));
-                start = plus;
-            }
+    public void addOpenTime(OpenTime openTime) {
+
+        LocalDate visitDate = openTime.visitDate().value();
+        LocalTime begin = openTime.timeDuration().begin();
+        LocalTime end = openTime.timeDuration().end();
+
+        while (begin.isBefore(end)) {
+            LocalTime plus = LocalTime.of(begin.getHour(), begin.getMinute()).plusMinutes(30);
+
+            this.appointments.add(Appointment.of(this, null, new OpenTime(new VisitDate(visitDate), new TimeDuration(begin, plus)), 0));
+            begin = plus;
         }
     }
 

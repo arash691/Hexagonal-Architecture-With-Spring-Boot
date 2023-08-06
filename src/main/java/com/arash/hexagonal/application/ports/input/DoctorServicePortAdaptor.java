@@ -29,7 +29,7 @@ public class DoctorServicePortAdaptor implements DoctorServicePort {
     @Override
     public Doctor createOpenTime(ID id, OpenTime openTime) {
         Doctor doctor = this.doctorPersistencePort.findDetailedById(id);
-        doctor.addOpenTimes(openTime);
+        doctor.addOpenTime(openTime);
         return doctorPersistencePort.createOrUpdate(doctor);
     }
 
