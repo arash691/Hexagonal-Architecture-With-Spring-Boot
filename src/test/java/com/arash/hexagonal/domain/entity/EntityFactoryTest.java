@@ -46,22 +46,24 @@ public abstract class EntityFactoryTest {
     public static OpenTime createValidOpenTime() {
         return OpenTime.of(LocalDate.of(2022, 1, 1), LocalTime.of(9, 0), LocalTime.of(11, 0));
     }
+
     public static OpenTime createInValidDurationOpenTime() {
         return OpenTime.of(LocalDate.of(2022, 1, 1), LocalTime.of(9, 0), LocalTime.of(9, 15));
     }
+
     public static List<Appointment> getExpectedAppointment() {
-        return List.of(Appointment.of(Doctor.of(id,medicalNo,fullName),null,
-                OpenTime.of(validOpenTime.getVisitDate().getVisitDate(),
-                        LocalTime.of(9,0),LocalTime.of(9,30)),0),
-                Appointment.of(Doctor.of(id,medicalNo,fullName),null,
+        return List.of(Appointment.of(Doctor.of(id, medicalNo, fullName), null,
                         OpenTime.of(validOpenTime.getVisitDate().getVisitDate(),
-                                LocalTime.of(9,30),LocalTime.of(10,0)),0),
-                Appointment.of(Doctor.of(id,medicalNo,fullName),null,
+                                LocalTime.of(9, 0), LocalTime.of(9, 30)), 0),
+                Appointment.of(Doctor.of(id, medicalNo, fullName), null,
                         OpenTime.of(validOpenTime.getVisitDate().getVisitDate(),
-                                LocalTime.of(10,0),LocalTime.of(10,30)),0),
-                Appointment.of(Doctor.of(id,medicalNo,fullName),null,
+                                LocalTime.of(9, 30), LocalTime.of(10, 0)), 0),
+                Appointment.of(Doctor.of(id, medicalNo, fullName), null,
                         OpenTime.of(validOpenTime.getVisitDate().getVisitDate(),
-                                LocalTime.of(10,30),LocalTime.of(11,0)),0));
+                                LocalTime.of(10, 0), LocalTime.of(10, 30)), 0),
+                Appointment.of(Doctor.of(id, medicalNo, fullName), null,
+                        OpenTime.of(validOpenTime.getVisitDate().getVisitDate(),
+                                LocalTime.of(10, 30), LocalTime.of(11, 0)), 0));
     }
 
 }

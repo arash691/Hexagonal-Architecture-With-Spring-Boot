@@ -1,7 +1,7 @@
 package com.arash.hexagonal.infrastructure.output;
 
-import com.arash.hexagonal.infrastructure.output.appointment.AppointmentEntity;
 import com.arash.hexagonal.domain.vo.OpenTime;
+import com.arash.hexagonal.infrastructure.output.appointment.AppointmentEntity;
 import com.arash.hexagonal.infrastructure.output.appointment.AppointmentPK;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

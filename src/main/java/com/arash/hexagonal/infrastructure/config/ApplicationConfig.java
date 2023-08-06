@@ -1,16 +1,16 @@
 package com.arash.hexagonal.infrastructure.config;
 
 import com.arash.hexagonal.application.ports.input.DoctorServicePort;
-import com.arash.hexagonal.application.ports.output.PatientPersistencePort;
-import com.arash.hexagonal.infrastructure.output.adaptor.PatientPersistenceAdaptor;
 import com.arash.hexagonal.application.ports.input.DoctorServicePortAdaptor;
 import com.arash.hexagonal.application.ports.input.PatientServicePort;
 import com.arash.hexagonal.application.ports.input.PatientServicePortAdaptor;
 import com.arash.hexagonal.application.ports.output.DoctorPersistencePort;
+import com.arash.hexagonal.application.ports.output.PatientPersistencePort;
 import com.arash.hexagonal.infrastructure.output.AppointmentRepository;
 import com.arash.hexagonal.infrastructure.output.DoctorRepository;
 import com.arash.hexagonal.infrastructure.output.PatientRepository;
 import com.arash.hexagonal.infrastructure.output.adaptor.DoctorPersistenceAdaptor;
+import com.arash.hexagonal.infrastructure.output.adaptor.PatientPersistenceAdaptor;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.models.media.StringSchema;

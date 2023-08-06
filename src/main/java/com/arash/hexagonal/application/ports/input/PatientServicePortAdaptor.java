@@ -1,10 +1,10 @@
 package com.arash.hexagonal.application.ports.input;
 
 import com.arash.hexagonal.application.ports.output.PatientPersistencePort;
-import com.arash.hexagonal.domain.vo.OpenTime;
 import com.arash.hexagonal.domain.entity.Doctor;
 import com.arash.hexagonal.domain.entity.Patient;
 import com.arash.hexagonal.domain.vo.Appointment;
+import com.arash.hexagonal.domain.vo.OpenTime;
 import com.arash.hexagonal.domain.vo.PhoneNumber;
 import com.arash.hexagonal.domain.vo.VisitDate;
 

@@ -1,17 +1,17 @@
 package com.arash.hexagonal.infrastructure.output.adaptor;
 
 import com.arash.hexagonal.application.ports.output.DoctorPersistencePort;
-import com.arash.hexagonal.domain.vo.OpenTime;
-import com.arash.hexagonal.infrastructure.output.AppointmentRepository;
-import com.arash.hexagonal.infrastructure.output.doctor.DoctorEntity;
 import com.arash.hexagonal.domain.entity.Doctor;
 import com.arash.hexagonal.domain.exception.DomainNotFoundException;
 import com.arash.hexagonal.domain.exception.RemoveDomainException;
 import com.arash.hexagonal.domain.vo.Appointment;
 import com.arash.hexagonal.domain.vo.ID;
+import com.arash.hexagonal.domain.vo.OpenTime;
 import com.arash.hexagonal.domain.vo.VisitDate;
+import com.arash.hexagonal.infrastructure.output.AppointmentRepository;
 import com.arash.hexagonal.infrastructure.output.DoctorRepository;
 import com.arash.hexagonal.infrastructure.output.appointment.AppointmentPK;
+import com.arash.hexagonal.infrastructure.output.doctor.DoctorEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -84,8 +84,8 @@ public class DoctorPersistenceAdaptor implements DoctorPersistencePort {
     @Override
     public void removeOpenTimes(ID id, OpenTime openTime) {
         this.appointmentRepository.findById(new AppointmentPK(id.getId(), openTime.getVisitDate().getVisitDate()
-                , openTime.getTimeDuration().getStart()
-                , openTime.getTimeDuration().getEnd()))
+                        , openTime.getTimeDuration().getStart()
+                        , openTime.getTimeDuration().getEnd()))
                 .ifPresentOrElse(appointmentEntity -> {
                             if (appointmentEntity.getPatient() == null) {
                                 this.appointmentRepository.deleteOpenTime(appointmentEntity.getId(), appointmentEntity.getVersion());

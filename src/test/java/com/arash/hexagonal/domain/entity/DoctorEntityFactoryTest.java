@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Created by arash on 21.10.22.
  */
 
-public class DoctorEntityFactoryTest extends EntityFactoryTest{
+public class DoctorEntityFactoryTest extends EntityFactoryTest {
 
     @Test
     @DisplayName("givenSimpleId_WhenCreateDoctorEntity_ThenDoctorEntityIdIsEqualsWithSimpleId")
@@ -53,6 +53,7 @@ public class DoctorEntityFactoryTest extends EntityFactoryTest{
         doctor.addOpenTimes(invalidDuration);
         assertNull(doctor.getAppointments());
     }
+
     @Test
     @DisplayName("givenInValidOpenTimeWithStartTimeLessThanEndTime_WhenCreateDoctorEntityAndAddOpenTime_ThenThrowsInvalidStartAndEndTimeException")
     public void givenInValidOpenTimeWithStartTimeLessThanEndTime_WhenCreateDoctorEntityAndAddOpenTime_ThenThrowsInvalidStartAndEndTimeException() {
@@ -61,6 +62,7 @@ public class DoctorEntityFactoryTest extends EntityFactoryTest{
             doctor.addOpenTimes(invalidStartingPointTime);
         });
     }
+
     @Test
     @DisplayName("givenValidOpenThanEndTime_WhenCreateDoctorEntityAndAddOpenTime_ThenDurationIsChunkedInto30MinWhichExpected")
     public void givenValidOpenThanEndTime_WhenCreateDoctorEntityAndAddOpenTime_ThenDurationIsChunkedInto30MinWhichExpected() {

@@ -1,10 +1,10 @@
 package com.arash.hexagonal.domain.entity;
 
+import com.arash.hexagonal.domain.predicates.IsNotLessThan30MinDuration;
+import com.arash.hexagonal.domain.predicates.IsNotNullOrEmptyFullName;
 import com.arash.hexagonal.domain.predicates.IsNullMedicalNo;
 import com.arash.hexagonal.domain.predicates.IsValidStartAndEndTime;
 import com.arash.hexagonal.domain.vo.*;
-import com.arash.hexagonal.domain.predicates.IsNotLessThan30MinDuration;
-import com.arash.hexagonal.domain.predicates.IsNotNullOrEmptyFullName;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

@@ -1,11 +1,11 @@
 package com.arash.hexagonal.infrastructure.input.adaptor;
 
 import com.arash.hexagonal.application.ports.input.DoctorServicePort;
-import com.arash.hexagonal.domain.vo.OpenTime;
 import com.arash.hexagonal.domain.entity.Doctor;
 import com.arash.hexagonal.domain.exception.InvalidStartAndEndTimeException;
 import com.arash.hexagonal.domain.exception.NullMedicalNoException;
 import com.arash.hexagonal.domain.vo.ID;
+import com.arash.hexagonal.domain.vo.OpenTime;
 import com.arash.hexagonal.infrastructure.input.request.CreateDoctorRequest;
 import com.arash.hexagonal.infrastructure.input.request.CreateOpenTimeRequest;
 import com.arash.hexagonal.infrastructure.input.request.RemoveOpenTimeRequest;
