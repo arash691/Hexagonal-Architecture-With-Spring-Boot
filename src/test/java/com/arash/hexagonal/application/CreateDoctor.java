@@ -27,9 +27,9 @@ public class CreateDoctor {
     @Then("A new doctor is created")
     public void a_new_Doctor_is_created() {
         assertNotNull(doctor);
-        assertEquals(1L, doctor.getId().getId());
-        assertEquals(123456L, doctor.getMedicalNo().getMedicalNo());
-        assertEquals("arash ariani", doctor.getFullName().getFullName());
+        assertEquals(1L, doctor.getId().value());
+        assertEquals(123456L, doctor.getMedicalNumber().value());
+        assertEquals("arash ariani", doctor.getFullName().value());
     }
 
 

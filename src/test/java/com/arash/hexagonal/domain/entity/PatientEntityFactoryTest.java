@@ -20,7 +20,7 @@ public class PatientEntityFactoryTest extends EntityFactoryTest {
     @DisplayName("givenSimpleId_WhenCreatePatientEntity_ThenPatientEntityIdIsEqualsWithSimpleId")
     public void givenSimpleId_WhenCreatePatientEntity_ThenPatientEntityIdIsEqualsWithSimpleId() {
         Patient patient = Patient.of(id);
-        assertEquals(patient.getId(), Id.of(id));
+        assertEquals(patient.getId(), new Id(id));
     }
 
     @Test

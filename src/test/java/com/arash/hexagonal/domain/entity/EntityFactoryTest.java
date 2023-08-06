@@ -2,13 +2,14 @@ package com.arash.hexagonal.domain.entity;
 
 import com.arash.hexagonal.domain.vo.Appointment;
 import com.arash.hexagonal.domain.vo.OpenTime;
+import com.arash.hexagonal.domain.vo.TimeDuration;
+import com.arash.hexagonal.domain.vo.VisitDate;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInstance;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-
 
 /**
  * Created by arash on 21.10.22.
@@ -40,30 +41,30 @@ public abstract class EntityFactoryTest {
     }
 
     private static OpenTime createInvalidStaringPointTime() {
-        return OpenTime.of(LocalDate.of(2022, 1, 1), LocalTime.of(10, 0), LocalTime.of(9, 30));
+        return new OpenTime(new VisitDate(LocalDate.of(2022, 1, 1)), new TimeDuration(LocalTime.of(10, 0), LocalTime.of(9, 30)));
     }
 
     public static OpenTime createValidOpenTime() {
-        return OpenTime.of(LocalDate.of(2022, 1, 1), LocalTime.of(9, 0), LocalTime.of(11, 0));
+        return new OpenTime(new VisitDate(LocalDate.of(2022, 1, 1)), new TimeDuration(LocalTime.of(9, 0), LocalTime.of(11, 0)));
     }
 
     public static OpenTime createInValidDurationOpenTime() {
-        return OpenTime.of(LocalDate.of(2022, 1, 1), LocalTime.of(9, 0), LocalTime.of(9, 15));
+        return new OpenTime(new VisitDate(LocalDate.of(2022, 1, 1)), new TimeDuration(LocalTime.of(9, 0), LocalTime.of(9, 15)));
     }
 
     public static List<Appointment> getExpectedAppointment() {
-        return List.of(Appointment.of(Doctor.of(id, medicalNo, fullName), null,
-                        OpenTime.of(validOpenTime.getVisitDate().getVisitDate(),
-                                LocalTime.of(9, 0), LocalTime.of(9, 30)), 0),
-                Appointment.of(Doctor.of(id, medicalNo, fullName), null,
-                        OpenTime.of(validOpenTime.getVisitDate().getVisitDate(),
-                                LocalTime.of(9, 30), LocalTime.of(10, 0)), 0),
-                Appointment.of(Doctor.of(id, medicalNo, fullName), null,
-                        OpenTime.of(validOpenTime.getVisitDate().getVisitDate(),
-                                LocalTime.of(10, 0), LocalTime.of(10, 30)), 0),
-                Appointment.of(Doctor.of(id, medicalNo, fullName), null,
-                        OpenTime.of(validOpenTime.getVisitDate().getVisitDate(),
-                                LocalTime.of(10, 30), LocalTime.of(11, 0)), 0));
+        return List.of(new Appointment(Doctor.of(id, medicalNo, fullName), null,
+                        new OpenTime(new VisitDate(validOpenTime.visitDate().value()),
+                                new TimeDuration(LocalTime.of(9, 0), LocalTime.of(9, 30))), 0),
+                new Appointment(Doctor.of(id, medicalNo, fullName), null,
+                        new OpenTime(new VisitDate(validOpenTime.visitDate().value()),
+                                new TimeDuration(LocalTime.of(9, 30), LocalTime.of(10, 0))), 0),
+                new Appointment(Doctor.of(id, medicalNo, fullName), null,
+                        new OpenTime(new VisitDate(validOpenTime.visitDate().value()),
+                                new TimeDuration(LocalTime.of(10, 0), LocalTime.of(10, 30))), 0),
+                new Appointment(Doctor.of(id, medicalNo, fullName), null,
+                        new OpenTime(new VisitDate(validOpenTime.visitDate().value()),
+                                new TimeDuration(LocalTime.of(10, 30), LocalTime.of(11, 0))), 0));
     }
 
 }
