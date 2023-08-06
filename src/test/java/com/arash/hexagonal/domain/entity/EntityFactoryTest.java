@@ -21,11 +21,7 @@ public abstract class EntityFactoryTest {
     protected static Long medicalNo;
     protected static String fullName;
     protected static String phoneNumber;
-    protected static OpenTime validOpenTime;
-    protected static OpenTime invalidDuration;
-    protected static OpenTime invalidStartingPointTime;
     protected static int NumberOfExpectation = 4;
-    protected static List<Appointment> expectedAppointments;
 
     @BeforeAll
     public static void init() {
@@ -33,37 +29,32 @@ public abstract class EntityFactoryTest {
         medicalNo = 123456789L;
         fullName = "arash ariani";
         phoneNumber = "09123456789";
-        validOpenTime = createValidOpenTime();
-        invalidDuration = createInValidDurationOpenTime();
-        invalidStartingPointTime = createInvalidStaringPointTime();
-        expectedAppointments = getExpectedAppointment();
-
     }
 
-    private static OpenTime createInvalidStaringPointTime() {
+    protected OpenTime createInvalidStaringPointTime() {
         return new OpenTime(new VisitDate(LocalDate.of(2022, 1, 1)), new TimeDuration(LocalTime.of(10, 0), LocalTime.of(9, 30)));
     }
 
-    public static OpenTime createValidOpenTime() {
+    protected OpenTime createValidOpenTime() {
         return new OpenTime(new VisitDate(LocalDate.of(2022, 1, 1)), new TimeDuration(LocalTime.of(9, 0), LocalTime.of(11, 0)));
     }
 
-    public static OpenTime createInValidDurationOpenTime() {
+    protected OpenTime createInValidDurationOpenTime() {
         return new OpenTime(new VisitDate(LocalDate.of(2022, 1, 1)), new TimeDuration(LocalTime.of(9, 0), LocalTime.of(9, 15)));
     }
 
-    public static List<Appointment> getExpectedAppointment() {
+    protected List<Appointment> getExpectedAppointment() {
         return List.of(new Appointment(Doctor.of(id, medicalNo, fullName), null,
-                        new OpenTime(new VisitDate(validOpenTime.visitDate().value()),
+                        new OpenTime(new VisitDate(createValidOpenTime().visitDate().value()),
                                 new TimeDuration(LocalTime.of(9, 0), LocalTime.of(9, 30))), 0),
                 new Appointment(Doctor.of(id, medicalNo, fullName), null,
-                        new OpenTime(new VisitDate(validOpenTime.visitDate().value()),
+                        new OpenTime(new VisitDate(createValidOpenTime().visitDate().value()),
                                 new TimeDuration(LocalTime.of(9, 30), LocalTime.of(10, 0))), 0),
                 new Appointment(Doctor.of(id, medicalNo, fullName), null,
-                        new OpenTime(new VisitDate(validOpenTime.visitDate().value()),
+                        new OpenTime(new VisitDate(createValidOpenTime().visitDate().value()),
                                 new TimeDuration(LocalTime.of(10, 0), LocalTime.of(10, 30))), 0),
                 new Appointment(Doctor.of(id, medicalNo, fullName), null,
-                        new OpenTime(new VisitDate(validOpenTime.visitDate().value()),
+                        new OpenTime(new VisitDate(createValidOpenTime().visitDate().value()),
                                 new TimeDuration(LocalTime.of(10, 30), LocalTime.of(11, 0))), 0));
     }
 
