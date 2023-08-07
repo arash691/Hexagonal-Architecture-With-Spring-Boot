@@ -26,8 +26,8 @@ public class PatientEntity extends BaseEntity {
 
     public static PatientEntity from(Patient patient) {
         PatientEntity patientEntity = new PatientEntity();
-        patientEntity.setName(patient.getFullName().getFullName());
-        patientEntity.setPhoneNumber(patient.getPhoneNumber().getPhoneNumber());
+        patientEntity.setName(patient.getFullName().value());
+        patientEntity.setPhoneNumber(patient.getPhoneNumber().value());
         return patientEntity;
     }
 

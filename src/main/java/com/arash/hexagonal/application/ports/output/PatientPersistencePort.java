@@ -11,7 +11,7 @@ public interface PatientPersistencePort {
 
     Patient createAppointment(Doctor doctor, Patient patient, OpenTime openTime);
 
-    Patient findDetailedById(ID id);
+    Patient findDetailedById(Id id);
 
     List<Appointment> findAppointments(PhoneNumber phoneNumber);
 }

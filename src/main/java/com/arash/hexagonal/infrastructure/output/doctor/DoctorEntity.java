@@ -29,17 +29,17 @@ public class DoctorEntity extends BaseEntity {
 
     public static DoctorEntity from(Doctor doctor) {
         DoctorEntity doctorEntity = new DoctorEntity();
-        doctorEntity.setId(doctor.getId() != null ? doctor.getId().getId() : null);
-        doctorEntity.setFullName(doctor.getFullName().getFullName());
-        doctorEntity.setMedicalNo(doctor.getMedicalNo().getMedicalNo());
+        doctorEntity.setId(doctor.getId() != null ? doctor.getId().value() : null);
+        doctorEntity.setFullName(doctor.getFullName().value());
+        doctorEntity.setMedicalNo(doctor.getMedicalNumber().value());
         Set<AppointmentEntity> appointmentEntities = new HashSet<>();
         if (doctor.getAppointments() != null && !doctor.getAppointments().isEmpty()) {
             for (Appointment appointment : doctor.getAppointments()) {
-                appointmentEntities.add(AppointmentEntity.from(doctorEntity, null, appointment.getOpenTime(), appointment.getVersion()));
+                appointmentEntities.add(AppointmentEntity.from(doctorEntity, null, appointment.openTime(), appointment.version()));
             }
             doctorEntity.setAppointments(appointmentEntities);
         }
-        doctorEntity.setId(doctor.getId().getId());
+        doctorEntity.setId(doctor.getId().value());
         return doctorEntity;
     }
 

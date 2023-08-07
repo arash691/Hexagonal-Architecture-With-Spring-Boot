@@ -22,9 +22,9 @@ public class PatientAppointmentResponse {
         List<PatientAppointmentResponse> patientAppointmentResponses = new ArrayList<>();
         for (Appointment appointment : appointments) {
             PatientAppointmentResponse patientAppointmentResponse = new PatientAppointmentResponse();
-            patientAppointmentResponse.setVisitDate(appointment.getOpenTime().getVisitDate().getVisitDate());
-            patientAppointmentResponse.setStartTime(appointment.getOpenTime().getTimeDuration().getStart());
-            patientAppointmentResponse.setEndTime(appointment.getOpenTime().getTimeDuration().getEnd());
+            patientAppointmentResponse.setVisitDate(appointment.openTime().visitDate().value());
+            patientAppointmentResponse.setStartTime(appointment.openTime().timeDuration().begin());
+            patientAppointmentResponse.setEndTime(appointment.openTime().timeDuration().end());
             patientAppointmentResponses.add(patientAppointmentResponse);
         }
         return patientAppointmentResponses;

@@ -23,13 +23,13 @@ public class DoctorAppointmentResponse {
         List<DoctorAppointmentResponse> doctorAppointmentResponses = new ArrayList<>();
         for (Appointment appointment : appointments) {
             DoctorAppointmentResponse doctorAppointmentResponse = new DoctorAppointmentResponse();
-            doctorAppointmentResponse.setVisitDate(appointment.getOpenTime().getVisitDate().getVisitDate());
-            doctorAppointmentResponse.setStartTime(appointment.getOpenTime().getTimeDuration().getStart());
-            doctorAppointmentResponse.setEndTime(appointment.getOpenTime().getTimeDuration().getEnd());
-            doctorAppointmentResponse.setFullName(appointment.getPatient() != null && appointment.getPatient().getFullName() != null
-                    ? appointment.getPatient().getFullName().getFullName() : null);
-            doctorAppointmentResponse.setPhoneNumber(appointment.getPatient() != null && appointment.getPatient().getPhoneNumber() != null ?
-                    appointment.getPatient().getPhoneNumber().getPhoneNumber() : null);
+            doctorAppointmentResponse.setVisitDate(appointment.openTime().visitDate().value());
+            doctorAppointmentResponse.setStartTime(appointment.openTime().timeDuration().begin());
+            doctorAppointmentResponse.setEndTime(appointment.openTime().timeDuration().end());
+            doctorAppointmentResponse.setFullName(appointment.patient() != null && appointment.patient().getFullName() != null
+                    ? appointment.patient().getFullName().value() : null);
+            doctorAppointmentResponse.setPhoneNumber(appointment.patient() != null && appointment.patient().getPhoneNumber() != null ?
+                    appointment.patient().getPhoneNumber().value() : null);
             doctorAppointmentResponses.add(doctorAppointmentResponse);
         }
         return doctorAppointmentResponses;

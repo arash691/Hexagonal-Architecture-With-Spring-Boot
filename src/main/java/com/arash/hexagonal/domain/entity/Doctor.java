@@ -1,14 +1,9 @@
 package com.arash.hexagonal.domain.entity;
 
-import com.arash.hexagonal.domain.predicates.IsNotLessThan30MinDuration;
-import com.arash.hexagonal.domain.predicates.IsNotNullOrEmptyFullName;
-import com.arash.hexagonal.domain.predicates.IsNullMedicalNo;
-import com.arash.hexagonal.domain.predicates.IsValidStartAndEndTime;
 import com.arash.hexagonal.domain.vo.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Objects;
 
@@ -16,55 +11,54 @@ import java.util.Objects;
  * @author a.ariani
  */
 public class Doctor {
-    private ID id;
-    private MedicalNo medicalNo;
+    private Id id;
+    private MedicalNumber medicalNumber;
     private FullName fullName;
     private List<Appointment> appointments;
 
-    private Doctor(ID id) {
+    private Doctor(Id id) {
         this.id = id;
     }
 
-    private Doctor(ID id, MedicalNo medicalNo, FullName fullName) {
+    private Doctor(Id id, MedicalNumber medicalNumber, FullName fullName) {
         this.id = id;
-        setMedicalNo(medicalNo);
+        setMedicalNo(medicalNumber);
         setFullName(fullName);
     }
 
-    private Doctor(ID id, MedicalNo medicalNo, FullName fullName, List<Appointment> appointments) {
+    private Doctor(Id id, MedicalNumber medicalNumber, FullName fullName, List<Appointment> appointments) {
         this.id = id;
-        setMedicalNo(medicalNo);
+        setMedicalNo(medicalNumber);
         setFullName(fullName);
         this.appointments = appointments;
     }
 
     public static Doctor of(Long id, Long medicalNo, String fullName) {
-        return new Doctor(ID.of(id), MedicalNo.of(medicalNo), FullName.of(fullName));
+        return new Doctor(new Id(id), new MedicalNumber(medicalNo), new FullName(fullName));
     }
 
     public static Doctor of(Long id, Long medicalNo, String fullName, List<Appointment> appointments) {
-        return new Doctor(ID.of(id), MedicalNo.of(medicalNo), FullName.of(fullName), appointments);
+        return new Doctor(new Id(id), new MedicalNumber(medicalNo), new FullName(fullName), appointments);
     }
 
     public static Doctor of(Long doctorId) {
-        return new Doctor(ID.of(doctorId));
+        return new Doctor(new Id(doctorId));
     }
 
-    public ID getId() {
+    public Id getId() {
         return id;
     }
 
-    public void setId(ID id) {
+    public void setId(Id id) {
         this.id = id;
     }
 
-    public MedicalNo getMedicalNo() {
-        return medicalNo;
+    public MedicalNumber getMedicalNumber() {
+        return medicalNumber;
     }
 
-    public void setMedicalNo(MedicalNo medicalNo) {
-        new IsNullMedicalNo().check(medicalNo);
-        this.medicalNo = medicalNo;
+    public void setMedicalNo(MedicalNumber medicalNumber) {
+        this.medicalNumber = medicalNumber;
     }
 
     public FullName getFullName() {
@@ -72,23 +66,20 @@ public class Doctor {
     }
 
     public void setFullName(FullName fullName) {
-        new IsNotNullOrEmptyFullName().check(fullName);
         this.fullName = fullName;
     }
 
-    public void addOpenTimes(OpenTime openTime) {
-        new IsValidStartAndEndTime().check(openTime);
-        if (new IsNotLessThan30MinDuration().test(openTime)) {
-            LocalDate visitDate = openTime.getVisitDate().getVisitDate();
-            LocalTime start = openTime.getTimeDuration().getStart();
-            LocalTime end = openTime.getTimeDuration().getEnd();
-            while (start.isBefore(end)) {
-                LocalTime plus = LocalTime.of(start.getHour(),
-                        start.getMinute()).plus(30, ChronoUnit.MINUTES);
-                appointments.add(Appointment.of(this, null, OpenTime.of(visitDate, start,
-                        plus), 0));
-                start = plus;
-            }
+    public void addOpenTime(OpenTime openTime) {
+
+        LocalDate visitDate = openTime.visitDate().value();
+        LocalTime begin = openTime.timeDuration().begin();
+        LocalTime end = openTime.timeDuration().end();
+
+        while (begin.isBefore(end)) {
+            LocalTime plus = LocalTime.of(begin.getHour(), begin.getMinute()).plusMinutes(30);
+
+            this.appointments.add(new Appointment(this, null, new OpenTime(new VisitDate(visitDate), new TimeDuration(begin, plus)), 0));
+            begin = plus;
         }
     }
 
@@ -103,19 +94,19 @@ public class Doctor {
         if (o == null || getClass() != o.getClass()) return false;
         Doctor doctor = (Doctor) o;
         return id.equals(doctor.id) &&
-                medicalNo.equals(doctor.medicalNo);
+                medicalNumber.equals(doctor.medicalNumber);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, medicalNo);
+        return Objects.hash(id, medicalNumber);
     }
 
     @Override
     public String toString() {
         return "Doctor{" +
                 "id=" + id +
-                ", medicalNo=" + medicalNo +
+                ", medicalNo=" + medicalNumber +
                 ", fullName=" + fullName +
                 '}';
     }

@@ -2,7 +2,7 @@ package com.arash.hexagonal.application.ports.output;
 
 import com.arash.hexagonal.domain.entity.Doctor;
 import com.arash.hexagonal.domain.vo.Appointment;
-import com.arash.hexagonal.domain.vo.ID;
+import com.arash.hexagonal.domain.vo.Id;
 import com.arash.hexagonal.domain.vo.OpenTime;
 import com.arash.hexagonal.domain.vo.VisitDate;
 
@@ -12,15 +12,15 @@ public interface DoctorPersistencePort {
 
     Doctor createOrUpdate(Doctor doctor);
 
-    Doctor findDetailedById(ID id);
+    Doctor findDetailedById(Id id);
 
-    Doctor findRootById(ID id);
+    Doctor findRootById(Id id);
 
-    List<Appointment> findAllAppointments(ID id);
+    List<Appointment> findAllAppointments(Id id);
 
-    List<Appointment> findAllTakenTimes(ID id);
+    List<Appointment> findAllTakenTimes(Id id);
 
     List<OpenTime> findAllAppointmentsByVisitDate(VisitDate visitDate);
 
-    void removeOpenTimes(ID id, OpenTime openTime);
+    void removeOpenTimes(Id id, OpenTime openTime);
 }

@@ -3,9 +3,11 @@ package com.arash.hexagonal.infrastructure.input.adaptor;
 import com.arash.hexagonal.application.ports.input.DoctorServicePort;
 import com.arash.hexagonal.domain.entity.Doctor;
 import com.arash.hexagonal.domain.exception.InvalidStartAndEndTimeException;
-import com.arash.hexagonal.domain.exception.NullMedicalNoException;
-import com.arash.hexagonal.domain.vo.ID;
+import com.arash.hexagonal.domain.exception.NullMedicalNumberException;
+import com.arash.hexagonal.domain.vo.Id;
 import com.arash.hexagonal.domain.vo.OpenTime;
+import com.arash.hexagonal.domain.vo.TimeDuration;
+import com.arash.hexagonal.domain.vo.VisitDate;
 import com.arash.hexagonal.infrastructure.input.request.CreateDoctorRequest;
 import com.arash.hexagonal.infrastructure.input.request.CreateOpenTimeRequest;
 import com.arash.hexagonal.infrastructure.input.request.RemoveOpenTimeRequest;
@@ -40,22 +42,22 @@ public class DoctorRestApiAdaptor {
     @PostMapping(path = "/{id}/open-times")
     public ResponseEntity<?> addOpenTimes(@PathVariable(name = "id") Long id, @Validated @RequestBody CreateOpenTimeRequest createOpenTimeRequest) {
         try {
-            Doctor openTime = doctorServicePort.createOpenTime(ID.of(id), OpenTime.of(createOpenTimeRequest.getVisitDate(), createOpenTimeRequest.getStartTime(), createOpenTimeRequest.getEndTime()));
+            Doctor openTime = doctorServicePort.createOpenTime(new Id(id), new OpenTime(new VisitDate(createOpenTimeRequest.getVisitDate()), new TimeDuration(createOpenTimeRequest.getStartTime(), createOpenTimeRequest.getEndTime())));
             return ResponseFactory.ok(openTime, DoctorResponse::from);
-        } catch (InvalidStartAndEndTimeException | NullMedicalNoException e) {
+        } catch (InvalidStartAndEndTimeException | NullMedicalNumberException e) {
             return ResponseFactory.badRequest(e.getMessage());
         }
     }
 
     @GetMapping(path = "/appointments")
     public ResponseEntity<?> getAppointments(@RequestParam(name = "id") Long id) {
-        return ResponseFactory.ok(doctorServicePort.findAllDoctorOpenAndTakenTimes(ID.of(id)), DoctorAppointmentResponse::from);
+        return ResponseFactory.ok(doctorServicePort.findAllDoctorOpenAndTakenTimes(new Id(id)), DoctorAppointmentResponse::from);
     }
 
     @DeleteMapping(path = "/{id}/open-times")
     public ResponseEntity<?> deleteOpenTimes(@PathVariable(name = "id") Long id,
                                              @RequestBody RemoveOpenTimeRequest openTime) {
-        doctorServicePort.removeOpenTime(ID.of(id), openTime.toDomain());
+        doctorServicePort.removeOpenTime(new Id(id), openTime.toDomain());
         return ResponseFactory.noContent("deleted");
     }
 }

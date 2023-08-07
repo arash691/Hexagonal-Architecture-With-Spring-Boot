@@ -20,14 +20,14 @@ public class DoctorResponse {
 
     public static DoctorResponse from(Doctor doctor) {
         DoctorResponse doctorResponse = new DoctorResponse();
-        doctorResponse.setMedicalNo(doctor.getMedicalNo().getMedicalNo());
-        doctorResponse.setFullName(doctor.getFullName().getFullName());
+        doctorResponse.setMedicalNo(doctor.getMedicalNumber().value());
+        doctorResponse.setFullName(doctor.getFullName().value());
         List<AppointmentResponse> appointmentResponses = new ArrayList<>();
         for (Appointment appointment : doctor.getAppointments()) {
             AppointmentResponse appointmentResponse = new AppointmentResponse();
-            appointmentResponse.setDate(appointment.getOpenTime().getVisitDate().getVisitDate());
-            appointmentResponse.setStartTime(appointment.getOpenTime().getTimeDuration().getStart());
-            appointmentResponse.setEndTime(appointment.getOpenTime().getTimeDuration().getEnd());
+            appointmentResponse.setDate(appointment.openTime().visitDate().value());
+            appointmentResponse.setStartTime(appointment.openTime().timeDuration().begin());
+            appointmentResponse.setEndTime(appointment.openTime().timeDuration().end());
             appointmentResponses.add(appointmentResponse);
         }
         doctorResponse.setAppointments(appointmentResponses);

@@ -32,9 +32,9 @@ public class OpenTimeEntity extends BaseEntity {
 
     public static OpenTimeEntity from(DoctorEntity doctor, OpenTime openTime) {
         OpenTimeEntity openTimeEntity = new OpenTimeEntity();
-        openTimeEntity.setVisitDate(openTime.getVisitDate().getVisitDate());
-        openTimeEntity.setStartTime(openTime.getTimeDuration().getStart());
-        openTimeEntity.setEndTime(openTime.getTimeDuration().getEnd());
+        openTimeEntity.setVisitDate(openTime.visitDate().value());
+        openTimeEntity.setStartTime(openTime.timeDuration().begin());
+        openTimeEntity.setEndTime(openTime.timeDuration().end());
         openTimeEntity.setDoctor(doctor);
         return openTimeEntity;
     }

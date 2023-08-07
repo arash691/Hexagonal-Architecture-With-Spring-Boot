@@ -38,7 +38,7 @@ public class PatientPersistenceAdaptor implements PatientPersistencePort {
 
     @Override
     public List<OpenTime> findAllByVisitDate(VisitDate visitDate) {
-        return this.appointmentRepository.findOpenTimeByVisitDate(visitDate.getVisitDate())
+        return this.appointmentRepository.findOpenTimeByVisitDate(visitDate.value())
                 .stream().map(AppointmentRepository.OpenAppointment::toDomain)
                 .collect(Collectors.toList());
     }
@@ -46,9 +46,9 @@ public class PatientPersistenceAdaptor implements PatientPersistencePort {
     @Transactional
     @Override
     public Patient createAppointment(Doctor doctor, Patient patient, OpenTime openTime) {
-        AppointmentEntity appointmentEntity = this.appointmentRepository.findById(new AppointmentPK(doctor.getId().getId(), openTime.getVisitDate().getVisitDate(),
-                        openTime.getTimeDuration().getStart(),
-                        openTime.getTimeDuration().getEnd()))
+        AppointmentEntity appointmentEntity = this.appointmentRepository.findById(new AppointmentPK(doctor.getId().value(), openTime.visitDate().value(),
+                        openTime.timeDuration().begin(),
+                        openTime.timeDuration().end()))
                 .orElseThrow(() -> {
                     throw new DomainNotFoundException("time not found");
                 });
@@ -62,17 +62,15 @@ public class PatientPersistenceAdaptor implements PatientPersistencePort {
     }
 
     @Override
-    public Patient findDetailedById(ID id) {
-        return patientRepository.findDetailById(id.getId()).
+    public Patient findDetailedById(Id id) {
+        return patientRepository.findDetailById(id.value()).
                 map(PatientEntity::toDomain)
-                .orElseThrow(() -> {
-                    throw new DomainNotFoundException(MessageFormat.format("patient with id '{'{0}'}' notfound", id.getId()));
-                });
+                .orElseThrow(() -> new DomainNotFoundException(MessageFormat.format("patient with id '{'{0}'}' notfound", id.value())));
     }
 
     @Override
     public List<Appointment> findAppointments(PhoneNumber phoneNumber) {
-        return patientRepository.findAppointmentByPhoneNumber(phoneNumber.getPhoneNumber())
+        return patientRepository.findAppointmentByPhoneNumber(phoneNumber.value())
                 .stream()
                 .map(PatientRepository.PatientAppointment::toDomain)
                 .collect(Collectors.toList());
